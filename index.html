@@ -204,14 +204,14 @@
 
       const res = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // Apps Script web apps often don't send CORS headers. Using no-cors ensures the request is sent.
+        // You won't be able to read the response (opaque), but the sheet will still receive the data.
+        mode: 'no-cors',
         body: JSON.stringify(payload)
       });
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.ok !== true) {
-        throw new Error(data.error || `Request failed (${res.status})`);
-      }
+      // If we get here, the browser sent the request.
+      // (We cannot read the response when mode is 'no-cors'.)
 
       form.reset();
       updateTotal();
