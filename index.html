@@ -202,12 +202,14 @@
     try {
       setSubmitting(true);
 
+            // Send as "application/x-www-form-urlencoded" (a "simple" request) so it works reliably from GitHub Pages.
+      const formBody = new URLSearchParams({ payload: JSON.stringify(payload) }).toString();
+
       const res = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        // Apps Script web apps often don't send CORS headers. Using no-cors ensures the request is sent.
-        // You won't be able to read the response (opaque), but the sheet will still receive the data.
         mode: 'no-cors',
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: formBody
       });
 
       // If we get here, the browser sent the request.
