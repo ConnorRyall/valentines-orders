@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine's Day Orders</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fdecef;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #c0392b;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .item input {
+      width: 70px;
+    }
+    .total {
+      margin-top: 15px;
+      font-size: 1.2em;
+      text-align: center;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .note {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .success {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      color: green;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      font-size: 0.85em;
+    }
+    th {
+      background: #f8d7da;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>❤️ Valentine's Day Sale ❤️</h1>
+
+  <form id="orderForm">
+    <label>Your name</label>
+    <input type="text" id="senderName" required />
+
+    <label>Your class</label>
+    <input type="text" id="senderClass" required />
+
+    <label>Your email</label>
+    <input type="email" id="email" required />
+
+    <label>Person you are sending the gift to</label>
+    <input type="text" id="receiverName" required />
+
+    <label>Their class</label>
+    <input type="text" id="receiverClass" required />
+
+    <h3>Choose your items</h3>
+
+    <div class="item">🍫 Chocolate (1€)
+      <input type="number" min="0" value="0" data-price="1" class="qty" />
+    </div>
+    <div class="item">🍪 Cookies (1.50€)
+      <input type="number" min="0" value="0" data-price="1.5" class="qty" />
+    </div>
+    <div class="item">🌹 Rose (2€)
+      <input type="number" min="0" value="0" data-price="2" class="qty" />
+    </div>
+
+    <div class="total">Total: €<span id="total">0.00</span></div>
+
+    <button type="submit">Submit Order</button>
+  </form>
+
+  <div class="note">
+    No online payment required.<br />
+    Come to <strong>Hollywood</strong> during <strong>recreo</strong><br />
+    any day from <strong>February 2nd–11th</strong> to pay.
+  </div>
+
+  <div class="success" id="successMsg">Order saved successfully 💌</div>
+
+  
+</div>
+
+<script>
+  // Paste your Apps Script Web App URL here (ends with /exec)
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyATisMVdeMB9123PoITqdbMDIgDXmQNeOFL2dqLy1EwVBVIWdmfEcyntXUaSP7IQap/exec";
+
+  const qtyInputs = document.querySelectorAll('.qty');
+  const totalSpan = document.getElementById('total');
+  const form = document.getElementById('orderForm');
+  const successMsg = document.getElementById('successMsg');
+
+  function updateTotal() {
+    let total = 0;
+    qtyInputs.forEach(i => (total += Number(i.value || 0) * Number(i.dataset.price)));
+    totalSpan.textContent = total.toFixed(2);
+  }
+
+  qtyInputs.forEach(i => i.addEventListener('input', updateTotal));
+
+  function getItemCounts() {
+    const vals = Array.from(qtyInputs).map(i => Number(i.value || 0));
+    return {
+      chocolate: vals[0] || 0,
+      cookies: vals[1] || 0,
+      rose: vals[2] || 0
+    };
+  }
+
+  function buildItemsString(counts) {
+    const parts = [];
+    if (counts.chocolate) parts.push(`${counts.chocolate} x Chocolate`);
+    if (counts.cookies) parts.push(`${counts.cookies} x Cookies`);
+    if (counts.rose) parts.push(`${counts.rose} x Rose`);
+    return parts.join(', ');
+  }
+
+  function setSubmitting(isSubmitting) {
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = isSubmitting;
+    btn.textContent = isSubmitting ? 'Submitting…' : 'Submit Order';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    successMsg.style.display = 'none';
+
+    const counts = getItemCounts();
+    if (!counts.chocolate && !counts.cookies && !counts.rose) {
+      alert('Please select at least 1 item before submitting.');
+      return;
+    }
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      senderName: document.getElementById('senderName').value.trim(),
+      senderClass: document.getElementById('senderClass').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      receiverName: document.getElementById('receiverName').value.trim(),
+      receiverClass: document.getElementById('receiverClass').value.trim(),
+      chocolateQty: counts.chocolate,
+      cookiesQty: counts.cookies,
+      roseQty: counts.rose,
+      items: buildItemsString(counts),
+      totalEUR: totalSpan.textContent
+    };
+
+    try {
+      setSubmitting(true);
+
+      const res = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.ok !== true) {
+        throw new Error(data.error || `Request failed (${res.status})`);
+      }
+
+      form.reset();
+      updateTotal();
+      successMsg.style.display = 'block';
+
+    } catch (err) {
+      alert('Sorry — your order could not be saved. Please try again or tell a teacher.\n\n' + err.message);
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  });
+
+  updateTotal();
+</script>
+
+
+</body>
+</html>
