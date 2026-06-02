@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EQN Official Report Card & Comment Builder</title>
-    <!-- Tailwind CSS for modern web interface styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter for general interface readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&family=Montserrat:wght=400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for sleek modern icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -87,7 +84,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-full flex flex-col">
 
-    <!-- Navigation Bar -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -96,10 +92,15 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg text-slate-900 tracking-tight">EQN Academy Evaluation Portal</h1>
-                    <p class="text-xs text-slate-500 font-medium">Official Exam Preparation & Report Builder (Official EQN Layout Standards)</p>
+                    <p class="text-xs text-slate-500 font-medium">Official Exam Preparation & Report Builder</p>
                 </div>
             </div>
             <div class="flex items-center space-x-3">
+                <label class="cursor-pointer bg-slate-100 hover:bg-indigo-50 border border-slate-200 text-slate-700 hover:text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5" title="Upload a local logo image file to display it everywhere">
+                    <i class="fa-solid fa-circle-arrow-up"></i>
+                    <span>Upload Logo</span>
+                    <input type="file" id="logoUpload" accept="image/*" class="hidden" onchange="handleLogoUpload(this)" />
+                </label>
                 <div class="relative group">
                     <input type="password" id="geminiApiKey" placeholder="Gemini API Key (Optional)" 
                         class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all w-48"
@@ -116,7 +117,6 @@
         </div>
     </header>
 
-    <!-- Main Content Area split into Input Wizard (Left) and Live Dual Previews (Right) -->
     <main class="flex-grow max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col xl:flex-row gap-8 no-print">
 
         <!-- LEFT SIDE: INTERACTIVE INPUT PANEL & ATTRIBUTES -->
@@ -266,7 +266,8 @@
                 <div class="flex flex-wrap items-center gap-4 text-xs font-medium border-b border-slate-50 pb-2">
                     <span class="text-slate-400 uppercase tracking-widest text-[9px] font-bold">LEGEND:</span>
                     <span class="flex items-center space-x-1.5 text-emerald-800"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span>Positive Habit</span></span>
-                    <span class="flex items-center space-x-1.5 text-rose-800"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> <span>Needs Focus</span></span>
+                    <span class="flex items-center space-x-1.5 text-amber-800"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> <span>Supportive / Can Improve</span></span>
+                    <span class="flex items-center space-x-1.5 text-rose-800"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> <span>Needs Direct Focus</span></span>
                     <span class="flex items-center space-x-1.5 text-sky-800"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> <span>Summer Recommendation</span></span>
                 </div>
 
@@ -431,8 +432,8 @@
                                 <!-- Left side (col-5) -->
                                 <div class="col-span-5 flex flex-col gap-3">
                                     <div class="flex items-center justify-start mb-2" style="min-height: 45px;">
-                                        <!-- Logo image from Screenshot 2026-06-02 at 14.34.25_2.png in the upper-left corner -->
-                                        <img src="Screenshot 2026-06-02 at 14.34.25_2.png" alt="EQN Logo" style="height: 45px; width: auto; max-width: 150px; display: block; object-fit: contain;" onerror="this.onerror=null; this.src='https://placehold.co/150x45/ffffff/22409a?text=EQN+Academy';">
+                                        <!-- Logo image in the upper-left corner of visual preview -->
+                                        <img class="eqn-logo-img" src="https://colegiohelicon.com/wp-content/uploads/2020/04/eqn.png" alt="EQN Logo" style="height: 45px; width: auto; max-width: 150px; display: block; object-fit: contain;" onerror="this.onerror=null; this.src='https://placehold.co/150x45/ffffff/22409a?text=';">
                                     </div>
                                     <div class="border border-slate-400 p-2 rounded">
                                         <div class="text-[10px] font-bold text-slate-700">NAME:</div>
@@ -574,10 +575,10 @@
             
             <!-- Left Side Column (Name, Level, Teacher, Contents) -->
             <div class="print-col-5 col-span-5 flex flex-col justify-between h-full" style="padding-right: 15px;">
-                <!-- Logo Header Block matching Screenshot 2026-06-02 at 14.34.25_2.png structure -->
+                <!-- Logo Header Block matching visual layout -->
                 <div class="flex items-center gap-3 mb-4" style="align-self: flex-start; min-height: 65px;">
-                    <!-- Logo image in the upper-left corner -->
-                    <img src="Screenshot 2026-06-02 at 14.34.25_2.png" alt="EQN Logo" style="height: 65px; width: auto; max-width: 200px; object-fit: contain; display: block;" onerror="this.onerror=null; this.src='https://placehold.co/180x65/ffffff/22409a?text=EQN+English';">
+                    <!-- Logo image in the upper-left corner of printable page -->
+                    <img class="eqn-logo-img" src="https://colegiohelicon.com/wp-content/uploads/2020/04/eqn.png" alt="EQN Logo" style="height: 65px; width: auto; max-width: 200px; object-fit: contain; display: block;" onerror="this.onerror=null; this.src='https://placehold.co/180x65/ffffff/22409a?text=';">
                 </div>
 
                 <!-- NAME Section Box -->
@@ -715,7 +716,7 @@
             "Flyers": {
                 descEs: "comprensión de textos cortos, descripción de experiencias y redacción de composiciones simples.",
                 descEn: "comprehending short texts, describing experiences, and writing simple compositions.",
-                syllEs: "Comprensión de textos cortos, participación en conversaciones simples, descripción detallada de experiencias, redacción de textos breves, manejo de gramática y vocabulario básico, y realización de tareas cotidianas. Enfocamos en listening con diálogos más complejos, speaking con conversaciones detalladas, reading con textos variados, y writing con composiciones simples. Incorporamos actividades interactivas y proyectos.",
+                syllEs: "Comprensión de textos cortos, participación en conversaciones simples, descripción de experiencias detallada, redacción de textos breves, manejo de gramática y vocabulario básico, y realización de tareas cotidianas. Enfocamos en listening con diálogos más complejos, speaking con conversaciones detalladas, reading con textos variados, y writing con composiciones simples. Incorporamos actividades interactivas y proyectos.",
                 syllEn: "Short text comprehension, descriptive experience telling, simple compositions, and detailed conversational practice targeted for early A2 level."
             },
             "A2": {
@@ -744,7 +745,122 @@
             }
         };
 
-        // UI State management
+        const databases = {
+            young: {
+                syllabus: [
+                    { id: "syl_y_ease", label: "With total ease", es: "sigue con total facilidad los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} with absolute ease.", isPositive: true },
+                    { id: "syl_y_sease", label: "With standard ease", es: "sigue con mucha facilidad los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} with relative ease.", isPositive: true },
+                    { id: "syl_y_normal", label: "With normality", es: "sigue con normalidad los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} normally.", isNeutral: true },
+                    { id: "syl_y_diff", label: "With some difficulty", es: "sigue con algunas dificultades los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} with some difficulties.", isNeutral: true },
+                    { id: "syl_y_struggles", label: "Significant struggles", es: "sigue con grandes dificultades los contenidos básicos de {levelDesc}.", en: "struggles significantly to follow the basic syllabus contents of {levelDesc}.", isNegative: true },
+                    { id: "syl_y_guided", label: "Requires guidance", es: "sigue con la ayuda constante del docente los contenidos de {levelDesc}.", en: "requires constant guidance from the teacher to follow the syllabus of {levelDesc}.", isNegative: true }
+                ],
+                performance: [
+                    { id: "perf_y_good", label: "Outstanding achievement", es: "Ha obtenido un gran rendimiento este trimestre. ¡Felicitaciones!", en: "Has achieved outstanding performance this term. Congratulations!", isPositive: true },
+                    { id: "perf_y_interest", label: "Highly motivated", es: "Demuestra gran interés por obtener buenas calificaciones y superarse.", en: "Demonstrates great interest in achieving good grades and improving.", isPositive: true },
+                    { id: "perf_y_capable", label: "Consistently responsible", es: "Ha demostrado ser perfectamente capaz de cumplir con todos los deberes del aula.", en: "Has proven to be perfectly capable of fulfilling all classroom tasks.", isPositive: true },
+                    { id: "perf_y_effort_inc", label: "Good effort, lacks consistency", es: "Se esfuerza en el aula aunque su rendimiento es algo inconsistente.", en: "Puts effort in class although {possessive} performance is somewhat inconsistent.", isNeutral: true },
+                    { id: "perf_y_potential", label: "Shows potential, needs focus", es: "Tiene capacidad para rendir más si se lo propone y se concentra.", en: "Has the capacity to achieve more if {subject} sets {possessive} mind to it and focuses.", isNeutral: true },
+                    { id: "perf_y_effort", label: "Lacks engagement / effort", es: "Debería mostrar mayor esfuerzo y compromiso personal con el trabajo del aula.", en: "Should show greater effort and personal commitment to classroom tasks.", isNegative: true }
+                ],
+                conduct: [
+                    { id: "cond_y_active", label: "Always eager to play & learn", es: "Siempre quiere participar de forma alegre en todas las actividades y juegos del aula.", en: "Always wants to participate joyfully in all classroom activities and games.", isPositive: true },
+                    { id: "cond_y_cooperative", label: "Highly cooperative classmate", es: "Es cooperativ@a y ayuda mucho a sus compañeros de clase.", en: "Is cooperative and helps {possessive} classmates a lot.", isPositive: true },
+                    { id: "cond_y_polite", label: "Polite and friendly", es: "Es un alumno muy educado, afectivo y amigable con todos.", en: "Is a very polite, warm, and friendly student to everyone.", isPositive: true },
+                    { id: "cond_y_helpful", label: "Respectful and helpful", es: "Es respetuos@a y muy dispuesto a ayudar en las tareas del aula.", en: "Is respectful and always ready to help tidy up classroom materials.", isPositive: true },
+                    { id: "cond_y_quiet", label: "Quiet but attentive", es: "Es tranquil@o y algo reservado pero presta atención durante las explicaciones.", en: "Is quiet and somewhat reserved but pays close attention during lessons.", isNeutral: true },
+                    { id: "cond_y_energetic", label: "Highly energetic", es: "Es una persona muy activa y con mucha energía en clase.", en: "Is a very active person with lots of energy in class.", isNeutral: true },
+                    { id: "cond_y_impulsive", label: "Acts impulsively", es: "A veces actúa antes de pensar y habla cuando no debe.", en: "Sometimes acts before thinking and speaks when {subject} shouldn't.", isNeutral: true },
+                    { id: "cond_y_turn", label: "Developing patience", es: "está aprendiendo a esperar pacientemente su turno para hablar durante las dinámicas grupales.", en: "is learning to wait patiently for {possessive} turn to speak during group dynamics.", isNeutral: true },
+                    { id: "cond_y_focus", label: "Improves with reminders", es: "consigue mantener un mejor nivel de concentración cuando se le ofrecen pequeños recordatorios afectuosos.", en: "manages to maintain a better level of focus when offered gentle, warm reminders.", isNeutral: true },
+                    { id: "cond_y_distracted", label: "Easily distracted", es: "Se distrae con facilidad perdiendo la concentración durante las explicaciones.", en: "Is easily distracted during explanations, losing concentration.", isNegative: true },
+                    { id: "cond_y_uncoop", label: "Reluctant to participate", es: "Le cuesta integrarse y participar en dinámicas grupales con sus compañeros.", en: "Finds it difficult to integrate and participate in group dynamics with peers.", isNegative: true },
+                    { id: "cond_y_noisy", label: "Speaks without permission", es: "Habla con frecuencia cuando no corresponde, interrumpiendo el ritmo general.", en: "Frequently speaks when it's not the time, disrupting the lesson rhythm.", isNegative: true }
+                ],
+                skills: [
+                    { id: "sk_y_memory", label: "Excellent visual memory", es: "Muestra una excelente memoria visual y reconocimiento de vocabulario.", en: "Shows excellent visual memory and vocabulary recognition.", isPositive: true },
+                    { id: "sk_y_phonics", label: "Exceptional phonics skills", es: "Tiene una gran pronunciación y asocia sonidos muy bien.", en: "Has great pronunciation and associates phonics sounds very well.", isPositive: true },
+                    { id: "sk_y_listening", label: "Fantastic listening tracking", es: "Comprende muy bien las instrucciones sencillas en inglés de forma oral.", en: "Understands simple oral English instructions very well.", isPositive: true },
+                    { id: "sk_y_write", label: "Strong tracing & motor skills", es: "Tiene buenas habilidades psicomotoras y realiza trazos con mucha limpieza.", en: "Has good psychomotor skills and traces letters very neatly.", isPositive: true },
+                    { id: "sk_y_sp_conf", label: "Creative oral descriptions", es: "Participa de forma activa en las dinámicas de habla usando frases creativas.", en: "Participates actively in speaking tasks using creative phrases.", isPositive: true },
+                    { id: "sk_y_good_vocab", label: "Good vocabulary", es: "demuestra un buen vocabulario para su edad.", en: "demonstrates a good vocabulary for {possessive} age.", isPositive: true },
+                    { id: "sk_y_full_sentences", label: "Can write in full sentences", es: "es capaz de escribir frases completas de manera autónoma.", en: "is capable of writing complete sentences independently.", isPositive: true },
+                    { id: "sk_y_good_pron", label: "Good pronunciation", es: "tiene una pronunciación fantástica y asocia los sonidos muy bien.", en: "has fantastic pronunciation and associates sounds extremely well.", isPositive: true },
+                    { id: "sk_y_part_freq", label: "Participates frequently", es: "participa de manera muy frecuente y entusiasta en clase.", en: "participates very frequently and enthusiastically in class.", isPositive: true },
+                    { id: "sk_y_trace_need", label: "Needs reading practice", es: "Necesita seguir practicando la lectura diaria y reconocimiento de palabras.", en: "Needs to continue practicing daily reading and word recognition.", isNeutral: true },
+                    { id: "sk_y_sp_low", label: "Needs speech practice / Shy", es: "Le falta un poco de confianza para expresarse oralmente delante de sus compañeros.", en: "Lacks a bit of confidence to express {self} orally in front of peers.", isNeutral: true },
+                    { id: "sk_y_vocab_need", label: "Struggles to retain vocabulary", es: "Le cuesta retener estructuras o palabras nuevas enseñadas en clase.", en: "Le cuesta retener estructuras o palabras nuevas enseñadas en clase.", isNeutral: true },
+                    { id: "sk_y_indep", label: "Guided independence", es: "se beneficia mucho de un pequeño apoyo individualizado para iniciar las tareas por sí sol@a.", en: "benefits greatly from some one-on-one encouragement to begin individual tasks on {possessive} own.", isNeutral: true },
+                    { id: "sk_y_handwriting", label: "Refining presentation", es: "está trabajando con dedicación para mejorar la caligrafía y presentación de sus fichas.", en: "is working diligently to refine {possessive} handwriting and worksheet presentation.", isNeutral: true },
+                    { id: "sk_y_materials", label: "Forgets class materials", es: "Frecuentemente olvida traer sus materiales o estuche de clase.", en: "Frequently forgets {possessive} classroom materials.", isNegative: true },
+                    { id: "sk_y_slow", label: "Struggles with individual tasks", es: "Trabaja con mucha lentitud y le cuesta terminar las tareas individuales.", en: "Works very slowly and struggles to finish individual worksheets.", isNegative: true }
+                ],
+                recommendations: [
+                    { id: "rec_y_series", label: "Watch English cartoons", es: "Se recomienda que vea dibujos animados en inglés en casa para mejorar su listening de manera natural.", en: "It is recommended to watch cartoons in English at home to improve listening naturally.", isRecommendation: true },
+                    { id: "rec_y_songs", label: "Listen to English songs", es: "Es aconsejable escuchar canciones infantiles en inglés y cantar juntos para asimilar ritmos.", en: "It is advisable to listen to children's songs in English and sing along together.", isRecommendation: true },
+                    { id: "rec_y_notes", label: "Label items with sticky notes", es: "Sería de gran ayuda etiquetar objetos de la casa con notas adhesivas en inglés como un juego de vocabulario.", en: "It would be very helpful to label household items with sticky notes in English.", isRecommendation: true },
+                    { id: "rec_y_books", label: "Read illustrated stories", es: "Es recomendable leer cuentos sencillos con muchas imágenes para reforzar vocabulario visual.", en: "It is recommended to read simple illustrated storybooks to reinforce visual vocabulary.", isRecommendation: true },
+                    { id: "rec_y_games", label: "Play vocabulary games", es: "Es una buena idea jugar a pequeños juegos interactivos de vocabulario en inglés en familia.", en: "It is a great idea to play short interactive vocabulary games in English as a family.", isRecommendation: true }
+                ]
+            },
+            higher: {
+                syllabus: [
+                    { id: "syl_h_mastery", label: "Outstanding mastery", es: "ha adquirido con total facilidad todos los contenidos de {levelDesc}.", en: "has mastered all the contents of {levelDesc} with outstanding ease.", isPositive: true },
+                    { id: "syl_h_ease", label: "Standard ease", es: "sigue con total facilidad los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} with absolute ease.", isPositive: true },
+                    { id: "syl_h_normal", label: "With normality", es: "sigue con normalidad los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} normally.", isNeutral: true },
+                    { id: "syl_h_diff", label: "With some difficulty", es: "sigue con algunas dificultades los contenidos de {levelDesc}.", en: "follows the content of {levelDesc} with some difficulties.", isNeutral: true },
+                    { id: "syl_h_struggles", label: "Frequent difficulties", es: "tiene dificultades frecuentes para comprender y asimilar la materia de {levelDesc}.", en: "frequently struggles to comprehend and assimilate the syllabus topics of {levelDesc}.", isNegative: true },
+                    { id: "syl_h_severe", label: "Severe content gaps", es: "no ha logrado asimilar los contenidos mínimos referentes al nivel {levelDesc}.", en: "has not acquired the minimum required curriculum content for {levelDesc}.", isNegative: true }
+                ],
+                performance: [
+                    { id: "perf_h_good", label: "Exceptional academic results", es: "Ha demostrado un rendimiento destacado y gran compromiso con el curso.", en: "Has demonstrated outstanding performance and great commitment to the course.", isPositive: true },
+                    { id: "perf_h_interest", label: "Dedicated and detail-oriented", es: "Manifiesta mucho interés, responsabilidad y preocupación constante en su trabajo escolar.", en: "Shows high interest and constant care and dedication in {possessive} schoolwork.", isPositive: true },
+                    { id: "perf_h_improve", label: "Great improvement shown", es: "Ha demostrado una excelente capacidad de superación mejorando notablemente sus notas.", en: "Has demonstrated a great capacity for improvement, notably raising {possessive} grades.", isPositive: true },
+                    { id: "perf_h_capable", label: "Capable of much more", es: "Es una persona muy capaz pero necesita un empuje extra en su motivación escolar.", en: "Is a very capable student but needs an extra motivational push in {possessive} studies.", isNeutral: true },
+                    { id: "perf_h_incons", label: "Inconsistent performance", es: "Su rendimiento a lo largo del trimestre ha sido algo inestable e irregular.", en: "Has shown somewhat unstable and irregular academic performance throughout this term.", isNeutral: true },
+                    { id: "perf_h_effort", label: "Underperforming / Needs dedication", es: "Debe adquirir un compromiso real y esforzarse más para mejorar sus notas.", en: "Must acquire real commitment and try harder to improve {possessive} grades.", isNegative: true }
+                ],
+                conduct: [
+                    { id: "cond_h_mature", label: "Mature and analytical", es: "Es una persona madura, muy respetuosa y siempre dispuesta a ayudar.", en: "Is mature, highly respectful, and always willing to help.", isPositive: true },
+                    { id: "cond_h_team", label: "Excellent team collaborator", es: "Trabaja muy bien en equipo y colabora activamente con sus compañeros de clase.", en: "Works very well in teams and actively collaborates with {possessive} classmates.", isPositive: true },
+                    { id: "cond_h_active", label: "Respectful active participant", es: "Muestra una excelente actitud participativa y es muy educad@o en sus aportaciones.", en: "Shows excellent participation habits and is extremely polite in {possessive} interactions.", isPositive: true },
+                    { id: "cond_h_leader", label: "Always demonstrates leadership", es: "Actúa como un líder positivo guiando al grupo hacia dinámicas excelentes.", en: "Acts as a positive leader, guiding the class towards excellent learning dynamics.", isPositive: true },
+                    { id: "cond_h_quiet", label: "Polite but quiet/passive", es: "Tiene un comportamiento excelente aunque adopta un rol demasiado pasivo en el aula.", en: "Has excellent behavior but adopts a somewhat passive role in the classroom.", isNeutral: true },
+                    { id: "cond_h_time", label: "Struggles with time-management", es: "Trabaja bien pero le cuesta gestionar el tiempo asignado a cada ejercicio.", en: "Works well but struggles to manage the time allocated for classroom exercises.", isNeutral: true },
+                    { id: "cond_h_resilience", label: "Needs to build resilience", es: "Tiende a desanimarse rápidamente cuando un ejercicio le resulta desafiante.", en: "Tends to get discouraged easily when a classroom exercise proves challenging.", isNeutral: true },
+                    { id: "cond_h_ask", label: "Encouraged to ask doubts", es: "debe intentar consultar sus dudas en voz alta con más frecuencia en lugar de guardárselas.", en: "is encouraged to voice {possessive} doubts out loud more frequently rather than keeping them to {self}.", isNeutral: true },
+                    { id: "cond_h_english_only", label: "Sticking to English only", es: "se beneficiaría de mantener un compromiso constante de usar únicamente el inglés durante los trabajos grupales.", en: "would benefit from making a consistent commitment to speak exclusively in English during group projects.", isNeutral: true },
+                    { id: "cond_h_distracted", label: "Frequently loses concentration", es: "Se distrae a menudo con facilidad perdiendo el hilo de las explicaciones.", en: "Is often easily distracted, losing focus during core explanations.", isNegative: true },
+                    { id: "cond_h_talking", label: "Disruptive or talks too much", es: "Habla cuando no debe y no permite que otros se concentren en el trabajo.", en: "Speaks when {subject} shouldn't, preventing others from focusing on tasks.", isNegative: true },
+                    { id: "cond_h_late", label: "Arrives late, breaking dynamic", es: "Tiende a llegar tarde, lo que interrumpe la introducción de las dinámicas.", en: "Tends to arrive late, which disrupts the introduction of class dynamics.", isNegative: true }
+                ],
+                skills: [
+                    { id: "sk_h_writing_good", label: "Superb writing structure", es: "Redacta textos bien estructurados, originales y con un vocabulario extenso.", en: "Writes well-structured, original texts with extensive vocabulary.", isPositive: true },
+                    { id: "sk_h_sp_fluent", label: "Fluency in debates", es: "Se expresa oralmente con mucha fluidez, precisión y confianza.", en: "Expresses {self} orally with great fluency, precision, and confidence.", isPositive: true },
+                    { id: "sk_h_grammar_good", label: "Strong grammatical precision", es: "Muestra gran precisión gramatical en el uso de estructuras complejas.", en: "Shows great grammatical precision when using complex structures.", isPositive: true },
+                    { id: "sk_h_read_good", label: "Excellent text reading analysis", es: "Comprende y analiza con agilidad lecturas y artículos académicos avanzados.", en: "Comprehends and analyzes advanced reading texts and articles with agility.", isPositive: true },
+                    { id: "sk_h_listen_good", label: "Impeccable listening tracking", es: "Tiene un oído excelente y comprende grabaciones a velocidad nativa sin problemas.", en: "Has excellent listening skills and understands native-speed audio effortlessly.", isPositive: true },
+                    { id: "sk_h_strong_vocab", label: "Strong vocabulary", es: "demuestra un vocabulario amplio y rico en sus producciones orales y escritas.", en: "demonstrates a wide and rich vocabulary in both oral and written work.", isPositive: true },
+                    { id: "sk_h_creative_work", label: "Produces creative work", es: "produce trabajos muy creativos y originales que destacan en el aula.", en: "produces highly creative and original work that stands out in the classroom.", isPositive: true },
+                    { id: "sk_h_apply_learn", label: "Frequently applies what they learn", es: "aplica con frecuencia todo lo aprendido en clase a nuevas situaciones de comunicación.", en: "frequently applies everything learned in class to new communicative situations.", isPositive: true },
+                    { id: "sk_h_vocab_need", label: "Needs vocabulary enlargement", es: "Necesita ampliar el repertorio de sinónimos y vocabulario formal en sus redacciones.", en: "Needs to expand {possessive} repertoire of synonyms and formal vocabulary.", isNeutral: true },
+                    { id: "sk_h_sp_low", label: "Hesitant in spontaneous speech", es: "Le falta un poco de soltura y confianza al participar en actividades de debate oral.", en: "Lacks a bit of fluency and confidence when participating in oral debates.", isNeutral: true },
+                    { id: "sk_h_exam", label: "Struggles under exam pressure", es: "Muestra buenos conocimientos en el día a día pero se bloquea en situaciones de examen.", en: "Shows good daily knowledge but tends to freeze under exam pressure.", isNeutral: true },
+                    { id: "sk_h_detail", label: "Refining grammar details", es: "está en proceso de asimilar mayor precisión en los detalles gramaticales y terminaciones verbales.", en: "is in the process of building more precision regarding grammar details and verb endings.", isNeutral: true },
+                    { id: "sk_h_extend", label: "Expanding written replies", es: "se le anima a extender y argumentar de forma más amplia sus respuestas en las redacciones escritas.", en: "is encouraged to expand and elaborate more fully on {possessive} responses in written compositions.", isNeutral: true },
+                    { id: "sk_h_grammar_bad", label: "Needs grammar core reinforcement", es: "Necesita revisar y consolidar estructuras de gramática básicas de cursos anteriores.", en: "Needs to review and consolidate basic grammar rules from previous courses.", isNegative: true },
+                    { id: "sk_h_careless", label: "Careless mistakes/No detail", es: "Comete errores debido a descuidos y falta de atención al detalle en sus ejercicios.", en: "Makes mistakes due to carelessness and lack of attention to detail.", isNegative: true }
+                ],
+                recommendations: [
+                    { id: "rec_h_series", label: "Watch English series / movies", es: "Se aconseja ver series o películas en versión original en inglés con subtítulos en inglés para mejorar la audición.", en: "It is recommended to watch series or movies in English with English subtitles to enhance listening.", isRecommendation: true },
+                    { id: "rec_h_books", label: "Read level-adapted English books", es: "Es muy recomendable leer novelas adaptadas a su nivel de preparación para asimilar estructuras naturales.", en: "It is highly advisable to read novels adapted to {possessive} preparation level.", isRecommendation: true },
+                    { id: "rec_h_diary", label: "Keep a short daily English journal", es: "Se sugiere escribir un diario o bitácora breve de tres líneas en inglés para soltar la mano escrita.", en: "It is suggested to write a short three-line journal in English to improve writing agility.", isRecommendation: true },
+                    { id: "rec_h_worksheets", label: "Practice grammar worksheets", es: "Se recomienda realizar un par de fichas de gramática a la semana en línea para no perder precisión.", en: "It is recommended to do a couple of grammar worksheets online each week.", isRecommendation: true },
+                    { id: "rec_h_apps", label: "Use free vocabulary/idiom apps", es: "Es una buena idea dedicar 10 minutos a repasar vocabulario con aplicaciones gratuitas de idiomas.", en: "It is a good idea to spend 10 minutes reviewing vocabulary with free language learning apps.", isRecommendation: true }
+                ]
+            }
+        };
+
         let currentGender = 'female';
         let currentPreviewTab = 'both';
         let currentLevelGroup = null; // Either 'young' or 'higher'
@@ -767,487 +883,39 @@
             effort_attitude: null
         };
 
-        // Database structures (Young learners vs CEFR)
-        const databases = {
-            young: {
-                syllabus: [
-                    {
-                        id: 'syl_ease_yl',
-                        label: 'With ease',
-                        isPositive: true,
-                        es: "sigue con total facilidad los contenidos lúdicos y de vocabulario trabajados hasta el momento en el aula, demostrando una asimilación excelente.",
-                        en: "follows the playful curriculum and vocabulary work with complete ease, showing excellent assimilation."
-                    },
-                    {
-                        id: 'syl_norm_yl',
-                        label: 'With normal progress',
-                        isPositive: true,
-                        es: "sigue con absoluta normalidad las dinámicas y contenidos del nivel, asimilando correctamente el vocabulario programado.",
-                        en: "normally follows the classroom dynamics and lessons, appropriately learning the core vocabulary."
-                    },
-                    {
-                        id: 'syl_steady_yl',
-                        label: 'With steady progress',
-                        isPositive: true,
-                        es: "sigue de manera constante las lecciones y está logrando un progreso sumamente sólido y escalonado.",
-                        en: "follows the class lessons steadily, showing solid and structured ongoing progress."
-                    },
-                    {
-                        id: 'syl_diff_yl',
-                        label: 'With some difficulty',
-                        isPositive: false,
-                        es: "sigue con algunas dificultades de atención y retención las dinámicas de clase, requiriendo apoyo para afianzar palabras básicas.",
-                        en: "follows class dynamics with some concentration issues, needing extra reinforcement to retain basic terms."
-                    },
-                    {
-                        id: 'syl_not_acq_yl',
-                        label: 'Not acquired yet',
-                        isPositive: false,
-                        es: "presenta dificultades importantes para consolidar el vocabulario básico y seguir las instrucciones sencillas del salón.",
-                        en: "displays significant difficulties consolidating fundamental vocabulary and following simple classroom directions."
-                    }
-                ],
-                performance: [
-                    {
-                        id: 'perf_outstanding_yl',
-                        label: 'Outstanding effort',
-                        isPositive: true,
-                        es: "Ha obtenido un destacado progreso en su aprendizaje gracias a su alegría y dedicación constante. ¡Felicitaciones!",
-                        en: "They have made outstanding progress in learning due to their joy and constant dedication. Congratulations!"
-                    },
-                    {
-                        id: 'perf_good_yl',
-                        label: 'Consistent & enthusiastic',
-                        isPositive: true,
-                        es: "Ha demostrado ser un@ alumno@ muy responsable, capaz de cumplir alegremente con todos sus deberes diarios.",
-                        en: "They have shown themselves to be a very responsible student, happily completing all daily tasks."
-                    },
-                    {
-                        id: 'perf_interest_yl',
-                        label: 'Motivated by good marks',
-                        isPositive: true,
-                        es: "Demuestra un gran interés por superarse a diario y obtener excelentes calificaciones en sus tareas.",
-                        en: "They display a strong motivation to improve daily and achieve excellent marks in their tasks."
-                    },
-                    {
-                        id: 'perf_effort_yl',
-                        label: 'Great commitment',
-                        isPositive: true,
-                        es: "Ha demostrado un gran esfuerzo y una actitud muy positiva hacia el aprendizaje del inglés.",
-                        en: "They have shown great effort and a very positive attitude towards learning English."
-                    },
-                    {
-                        id: 'perf_underachieving_yl',
-                        label: 'Capable of more',
-                        isPositive: false,
-                        es: "Su rendimiento es adecuado, aunque tiene la capacidad para brillar mucho más si se lo propone y se esfuerza un poco más.",
-                        en: "Their performance is acceptable, although they have the natural capability to shine much brighter with a little more focus."
-                    },
-                    {
-                        id: 'perf_rushed_yl',
-                        label: 'Rushes to finish',
-                        isPositive: false,
-                        es: "Tiende a realizar sus tareas de manera demasiado apresurada, lo que hace que descuide la precisión de sus respuestas.",
-                        en: "They tend to complete their tasks too quickly, which leads to missing details and minor errors."
-                    }
-                ],
-                conduct: [
-                    {
-                        id: 'con_leader_yl',
-                        label: 'Positive role model',
-                        isPositive: true,
-                        es: "Es una persona madura para su edad que destaca como un ejemplo positivo para sus compañeros.",
-                        en: "They are exceptionally mature for their age, standing out as a positive role model for their peers."
-                    },
-                    {
-                        id: 'con_helpful_yl',
-                        label: 'Highly cooperative',
-                        isPositive: true,
-                        es: "Siempre se muestra muy cooperativo, listo para ayudar en el aula y mantener el orden del salón.",
-                        en: "They are always highly cooperative, ready to help in class and keep the room tidy."
-                    },
-                    {
-                        id: 'con_polite_quiet_yl',
-                        label: 'Respectful & polite',
-                        isPositive: true,
-                        es: "Es muy respetuoso y educado con sus profesores y compañeros, colaborando de manera excelente con las rutinas diarias.",
-                        en: "They are very respectful and polite with teachers and classmates, collaborating excellently with daily routines."
-                    },
-                    {
-                        id: 'con_distracted_yl',
-                        label: 'Easily distracted',
-                        isPositive: false,
-                        es: "Se despista con facilidad y se muestra algo inquiet@ durante las explicaciones, lo que ralentiza su aprendizaje.",
-                        en: "They easily lose focus and get a bit restless during explanations, which can slow down their learning."
-                    },
-                    {
-                        id: 'con_talkative_yl',
-                        label: 'Talkative / Chatty',
-                        isPositive: false,
-                        es: "Suele hablar mucho en español durante las explicaciones, lo que a veces interrumpe el ritmo del grupo.",
-                        en: "They tend to speak Spanish a lot during lessons, which occasionally disrupts the flow of the class."
-                    },
-                    {
-                        id: 'con_late_yl',
-                        label: 'Frequently arrives late',
-                        isPositive: false,
-                        es: "Suele llegar tarde a clase, lo que altera su inicio en las dinámicas y le cuesta engancharse de inmediato.",
-                        en: "They often arrive late to class, disrupting their early routine and make it harder to engage immediately."
-                    },
-                    {
-                        id: 'con_disruptive_yl',
-                        label: 'Acts impulsively',
-                        isPositive: false,
-                        es: "Suele actuar de manera impulsiva antes de pensar, lo que a veces dificulta que se concentre y escuche.",
-                        en: "They tend to act impulsively before thinking, which sometimes impacts their focus and listening ability."
-                    }
-                ],
-                skills: [
-                    {
-                        id: 'ski_vocab_yl',
-                        label: 'Quick vocabulary learner',
-                        isPositive: true,
-                        es: "posee una memoria estupenda y asimila las palabras nuevas con gran rapidez y naturalidad.",
-                        en: "possesses a wonderful memory and assimilates new vocabulary very quickly and naturally."
-                    },
-                    {
-                        id: 'ski_tracing_yl',
-                        label: 'Good fine motor tracing',
-                        isPositive: true,
-                        es: "demuestra una motricidad fina excelente, realizando trazos limpios y copiando letras y palabras con esmero.",
-                        en: "demonstrates excellent fine motor skills, tracing cleanly and copying letters and words with care."
-                    },
-                    {
-                        id: 'ski_phonics_yl',
-                        label: 'Enjoys songs & phonics',
-                        isPositive: true,
-                        es: "disfruta enormemente cantando canciones y repitiendo sonidos, logrando una pronunciación excelente.",
-                        en: "greatly enjoys singing songs and repeating sounds, achieving an excellent pronunciation."
-                    },
-                    {
-                        id: 'ski_visual_yl',
-                        label: 'Quick visual recall',
-                        isPositive: true,
-                        es: "demuestra una habilidad fantástica para reconocer tarjetas de vocabulario y patrones visuales con rapidez.",
-                        en: "demonstrates a fantastic ability to recognize flashcards and visual patterns quickly."
-                    },
-                    {
-                        id: 'ski_tracing_bad_yl',
-                        label: 'Struggles with tracing/writing',
-                        isPositive: false,
-                        es: "presenta dificultades al copiar palabras de la pizarra o realizar trazos precisos, necesitando guía constante.",
-                        en: "presents difficulties copying words from the board or doing precise tracing, needing constant guidance."
-                    },
-                    {
-                        id: 'ski_listening_bad_yl',
-                        label: 'Struggles with spoken directions',
-                        isPositive: false,
-                        es: "le cuesta seguir instrucciones habladas sencillas, distrayéndose con otros elementos de la clase.",
-                        en: "struggles to follow simple spoken directions, getting easily distracted by other elements in the room."
-                    },
-                    {
-                        id: 'ski_speaking_shy_yl',
-                        label: 'Shy in oral production',
-                        isPositive: false,
-                        es: "le falta algo de confianza para participar de manera voluntaria en las actividades de expresión oral.",
-                        en: "lacks confidence to voluntarily participate in speaking and oral communication tasks."
-                    },
-                    {
-                        id: 'ski_materials_yl',
-                        label: 'Forgets materials',
-                        isPositive: false,
-                        es: "frecuentemente olvida traer sus lápices, colores o cuaderno de actividades a clase.",
-                        en: "frequently forgets to bring their pencils, crayons, or activity workbook to class."
-                    },
-                    {
-                        id: 'ski_supervision_yl',
-                        label: 'Needs direct supervision',
-                        isPositive: false,
-                        es: "requiere supervisión directa constante para poder finalizar las actividades individuales a tiempo.",
-                        en: "requires constant direct supervision to complete individual tasks in a timely manner."
-                    }
-                ],
-                recommendations: [
-                    {
-                        id: 'rec_series_yl',
-                        label: 'Cartoons in English',
-                        isRecommendation: true,
-                        es: "Para las vacaciones, aconsejo dedicar un ratito a ver sus dibujos animados preferidos en inglés.",
-                        en: "For the holidays, I recommend spending a brief moment watching their favorite cartoons in English."
-                    },
-                    {
-                        id: 'rec_books_yl',
-                        label: 'Read simple storybooks',
-                        isRecommendation: true,
-                        es: "Sería de gran utilidad que lea cuentos sencillos ilustrados en inglés para familiarizarse con las palabras.",
-                        en: "It would be highly beneficial to read simple illustrated storybooks in English to become familiar with words."
-                    },
-                    {
-                        id: 'rec_games_yl',
-                        label: 'Vocabulary sticky notes',
-                        isRecommendation: true,
-                        es: "Sugiero usar notas adhesivas gratuitas en casa para etiquetar objetos cotidianos en inglés.",
-                        en: "I suggest placing sticky notes around the house to label everyday items in English for free."
-                    },
-                    {
-                        id: 'rec_songs_yl',
-                        label: 'Listen to free songs',
-                        isRecommendation: true,
-                        es: "Aconsejo escuchar canciones infantiles en inglés para acostumbrar el oído al idioma de forma gratuita.",
-                        en: "I advise listening to children's songs in English for free to naturally train their ear to the language."
-                    }
-                ]
-            },
-            higher: {
-                syllabus: [
-                    {
-                        id: 'syl_ease_hi',
-                        label: 'With ease',
-                        isPositive: true,
-                        es: "sigue con total facilidad los contenidos trabajados hasta el momento en el aula y demuestra una asimilación excelente de los objetivos propuestos.",
-                        en: "easily follows all contents covered in class so far and demonstrates excellent acquisition of the proposed level goals."
-                    },
-                    {
-                        id: 'syl_norm_hi',
-                        label: 'With normal progress',
-                        isPositive: true,
-                        es: "sigue con absoluta normalidad los contenidos trabajados hasta el momento en el aula, asimilando correctamente las bases teóricas.",
-                        en: "normally follows all the lessons worked in class, acquiring the core grammatical and vocabulary foundations without major issues."
-                    },
-                    {
-                        id: 'syl_high_hi',
-                        label: 'With high distinction',
-                        isPositive: true,
-                        es: "asimila los contenidos con distinción académica sobresaliente, demostrando dominio en cada módulo conceptual evaluado.",
-                        en: "assimilates the lesson topics with academic distinction, demonstrating clear mastery over each evaluated module."
-                    },
-                    {
-                        id: 'syl_diff_hi',
-                        label: 'With some difficulty',
-                        isPositive: false,
-                        es: "sigue con ciertas dificultades puntuales algunos de los contenidos trabajados hasta el momento en el aula, necesitando repasar para afianzar conceptos.",
-                        en: "follows some of the content covered in class with occasional difficulties, requiring extra review to fully reinforce concepts."
-                    },
-                    {
-                        id: 'syl_not_acq_hi',
-                        label: 'Not acquired yet',
-                        isPositive: false,
-                        es: "presenta dificultades importantes para consolidar los contenidos gramaticales y conceptuales del nivel, por lo que requiere apoyo continuo.",
-                        en: "displays significant difficulties consolidating the grammatical and conceptual structures of this level, requiring ongoing support."
-                    }
-                ],
-                performance: [
-                    {
-                        id: 'perf_outstanding_hi',
-                        label: 'Outstanding achievement',
-                        isPositive: true,
-                        es: "Ha obtenido un destacado rendimiento escolar fruto de su constante implicación. ¡Felicitaciones por este gran trabajo!",
-                        en: "They have achieved outstanding academic performance due to their constant engagement. Congratulations on this great effort!"
-                    },
-                    {
-                        id: 'perf_good_hi',
-                        label: 'Consistent & responsible',
-                        isPositive: true,
-                        es: "Ha demostrado ser capaz de cumplir de forma consistente y responsable con todos los deberes escolares diarios.",
-                        en: "They have shown their capability to consistently and responsibly meet all daily schoolwork tasks."
-                    },
-                    {
-                        id: 'perf_project_hi',
-                        label: 'Excellent submissions',
-                        isPositive: true,
-                        es: "Destaca especialmente en la entrega de proyectos y tareas opcionales que elevan su nivel académico general.",
-                        en: "They stand out in delivering optional assignments and projects that greatly elevate their general academic level."
-                    },
-                    {
-                        id: 'perf_underachieving_hi',
-                        label: 'Capable of more',
-                        isPositive: false,
-                        es: "Su rendimiento es adecuado, aunque tiene la capacidad necesaria para rendir a un nivel notablemente más alto si se lo propone.",
-                        en: "Their academic performance is acceptable, although they have the natural capability to achieve much higher results if they focus and try harder."
-                    },
-                    {
-                        id: 'perf_needs_commitment_hi',
-                        label: 'Needs more commitment',
-                        isPositive: false,
-                        es: "Debe adquirir un compromiso real y mayor constancia con sus deberes diarios en clase para poder revertir su rendimiento.",
-                        en: "They need to assume a true daily commitment and consistent effort with class objectives to boost their academic output."
-                    },
-                    {
-                        id: 'perf_rushed_hi',
-                        label: 'Underperforming from rushing',
-                        isPositive: false,
-                        es: "Trabaja con excesiva rapidez y descuida la calidad de sus entregas, lo que perjudica sus calificaciones finales.",
-                        en: "They work too quickly and overlook important detail, which unfortunately lowers their final evaluation marks."
-                    }
-                ],
-                conduct: [
-                    {
-                        id: 'con_leader_hi',
-                        label: 'Positive leader',
-                        isPositive: true,
-                        es: "Es una persona madura que destaca como un líder positivo que influye favorablemente en el clima de la clase.",
-                        en: "They are exceptionally mature, standing out as a positive leader who actively influences the classroom environment in a beneficial way."
-                    },
-                    {
-                        id: 'con_helpful_hi',
-                        label: 'Highly cooperative',
-                        isPositive: true,
-                        es: "Siempre se muestra muy cooperativo y está dispuesto a ayudar a sus compañeros y a mantener el orden del salón.",
-                        en: "They are highly cooperative, friendly to everyone, and always willing to support classmates and help keep the room organized."
-                    },
-                    {
-                        id: 'con_distracted_hi',
-                        label: 'Easily distracted',
-                        isPositive: false,
-                        es: "Se despista con bastante facilidad y se distrae durante las explicaciones, lo que puede ralentizar su ritmo de aprendizaje.",
-                        en: "They easily lose focus and get distracted during explanations, which can occasionally slow down their learning pace."
-                    },
-                    {
-                        id: 'con_talkative_hi',
-                        label: 'Talks out of turn',
-                        isPositive: false,
-                        es: "Suele hablar cuando no debe y en ocasiones interrumpe la clase, impidiendo que el grupo se concentre por completo.",
-                        en: "They tend to talk out of turn and sometimes interrupt, making it difficult for the group to maintain full concentration."
-                    },
-                    {
-                        id: 'con_late_hi',
-                        label: 'Frequently arrives late',
-                        isPositive: false,
-                        es: "Suele llegar tarde a clase, lo que interrumpe el ritmo inicial de la sesión y dificulta su concentración.",
-                        en: "They frequently arrive late to class, which disrupts the starting flow of the lesson and makes focusing difficult."
-                    },
-                    {
-                        id: 'con_nocontrol_hi',
-                        label: 'Lacks self-control',
-                        isPositive: false,
-                        es: "Necesita mejorar su autocontrol y regular su comportamiento para integrarse mejor en las actividades grupales de clase.",
-                        en: "They need to improve their self-control and behavior to better integrate into group activities in class."
-                    }
-                ],
-                skills: [
-                    {
-                        id: 'ski_vocab_hi',
-                        label: 'Extensive vocabulary',
-                        isPositive: true,
-                        es: "posee un vocabulario en inglés sumamente extenso y adquiere nuevos conceptos con gran naturalidad.",
-                        en: "possesses an extensive range of active vocabulary and acquires new concepts with natural ease."
-                    },
-                    {
-                        id: 'ski_writing_good_hi',
-                        label: 'Strong writing mechanics',
-                        isPositive: true,
-                        es: "redacta textos con excelente coherencia, estructurando sus ideas de forma clara y respetando las reglas de puntuación.",
-                        en: "writes texts with excellent coherence, structuring their ideas clearly and respecting punctuation rules."
-                    },
-                    {
-                        id: 'ski_reading_good_hi',
-                        label: 'Advanced reading comprehension',
-                        isPositive: true,
-                        es: "demuestra una fantástica comprensión lectora, asimilando textos complejos para su nivel y respondiendo preguntas con precisión.",
-                        en: "demonstrates fantastic reading comprehension, absorbing complex texts for their level and answering questions accurately."
-                    },
-                    {
-                        id: 'ski_listening_good_hi',
-                        label: 'Excellent listening skills',
-                        isPositive: true,
-                        es: "demuestra una agudeza auditiva excelente, captando los acentos y las instrucciones de audición complejas al primer intento.",
-                        en: "demonstrates excellent listening comprehension, picking up varying accents and complex audio instructions on the first attempt."
-                    },
-                    {
-                        id: 'ski_speaking_good_hi',
-                        label: 'Fluent oral interaction',
-                        isPositive: true,
-                        es: "se expresa verbalmente con una fluidez y pronunciación excelentes, sin temor a iniciar diálogos en inglés.",
-                        en: "expresses themselves verbally with excellent fluency and pronunciation, showing no hesitation to start conversations in English."
-                    },
-                    {
-                        id: 'ski_grammar_good_hi',
-                        label: 'Strong grammatical precision',
-                        isPositive: true,
-                        es: "aplica las reglas gramaticales teóricas de manera muy exacta y natural, tanto al hablar como al redactar.",
-                        en: "applies theoretical grammar rules very accurately and naturally, both in speaking and writing tasks."
-                    },
-                    {
-                        id: 'ski_writing_bad_hi',
-                        label: 'Struggles with spelling/writing',
-                        isPositive: false,
-                        es: "presenta dificultades en la expresión escrita, cometiendo errores frecuentes de ortografía y faltándole cohesión al redactar.",
-                        en: "experiences difficulties with written expression, making frequent spelling errors and lacking overall cohesion in writing."
-                    },
-                    {
-                        id: 'ski_reading_bad_hi',
-                        label: 'Struggles with text comprehension',
-                        isPositive: false,
-                        es: "le cuesta comprender textos escritos con rapidez, requiriendo leerlos varias veces para captar el sentido principal.",
-                        en: "struggles to comprehend written texts quickly, needing to read them several times to grasp the main meaning."
-                    },
-                    {
-                        id: 'ski_listening_bad_hi',
-                        label: 'Struggles with oral listening',
-                        isPositive: false,
-                        es: "presenta dificultades para seguir los ejercicios de escucha, perdiendo el hilo con facilidad y necesitando repeticiones adicionales.",
-                        en: "has difficulties following listening exercises, losing track easily and requiring extra repetitions of the audio."
-                    },
-                    {
-                        id: 'ski_oral_confidence_hi',
-                        label: 'Lacks oral confidence',
-                        isPositive: false,
-                        es: "le falta algo de confianza para participar de forma más activa en actividades de speaking y producciones orales.",
-                        en: "lacks self-confidence when speaking English, showing hesitation during oral communication tasks."
-                    },
-                    {
-                        id: 'ski_grammar_reinforce_hi',
-                        label: 'Needs grammar reinforcement',
-                        isPositive: false,
-                        es: "es recomendable que repase las estructuras gramaticales básicas vistas este curso para evitar pequeños errores constantes.",
-                        en: "it is highly recommended that they review core grammatical structures covered this year to avoid persistent minor errors."
-                    },
-                    {
-                        id: 'ski_prompt_hi',
-                        label: 'Confused by written instructions',
-                        isPositive: false,
-                        es: "se confunde con cierta frecuencia con las instrucciones por escrito, por lo que necesita apoyo adicional para iniciar sus tareas.",
-                        en: "gets confused occasionally by written instructions, requiring extra guidance to start their class activities."
-                    }
-                ],
-                recommendations: [
-                    {
-                        id: 'rec_series_hi',
-                        label: 'Watch English series',
-                        isRecommendation: true,
-                        es: "Para las vacaciones, aconsejo dedicar unos minutos a ver dibujos animados o series breves en inglés con subtítulos.",
-                        en: "For the holidays, I advise dedicating a few minutes a day to watching cartoons or short series in English with subtitles."
-                    },
-                    {
-                        id: 'rec_books_hi',
-                        label: 'Read simple books',
-                        isRecommendation: true,
-                        es: "Sería de gran utilidad que dedique un tiempo cada día a leer cuentos sencillos en inglés para consolidar su vocabulario.",
-                        en: "It would be highly beneficial to spend some time daily reading simple stories in English to consolidate vocabulary."
-                    },
-                    {
-                        id: 'rec_puzzles_hi',
-                        label: 'Free word crosswords',
-                        isRecommendation: true,
-                        es: "Sugiero realizar sopas de letras o pequeños crucigramas en inglés durante el verano de forma gratuita para retener estructuras.",
-                        en: "I suggest doing word search puzzles or quick crosswords in English over the summer to retain structures in a playful, free way."
-                    },
-                    {
-                        id: 'rec_apps_free_hi',
-                        label: 'Free educational apps',
-                        isRecommendation: true,
-                        es: "Le recomiendo practicar usando aplicaciones educativas gratuitas como Duolingo para mantener el idioma activo.",
-                        en: "I recommend practicing daily using free educational apps like Duolingo to keep the language active."
-                    }
-                ]
+        function handleLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Data = e.target.result;
+                    // Save logo state to user's local storage sandbox
+                    localStorage.setItem('eqn_logo_base64', base64Data);
+                    applyLogoToDocument(base64Data);
+                    showToast("EQN official logo successfully saved!");
+                };
+                reader.readAsDataURL(input.files[0]);
             }
-        };
+        }
+
+        function applyLogoToDocument(src) {
+            document.querySelectorAll('.eqn-logo-img').forEach(img => {
+                img.src = src;
+                // Temporarily detach placeholder rules to prevent collision overrides
+                img.onerror = null;
+            });
+        }
 
         window.onload = function() {
             setPronoun('female'); // default
             
             // Set default empty score targets
             clearScores();
+
+            // Check if logo is saved in localStorage and load it instantly
+            const cachedLogo = localStorage.getItem('eqn_logo_base64');
+            if (cachedLogo) {
+                applyLogoToDocument(cachedLogo);
+            }
 
             // Setup dropdown level logic triggers
             document.getElementById('eqnLevel').addEventListener('change', () => {
@@ -1481,6 +1149,11 @@
                 return isActive
                     ? `${base} border-emerald-600 bg-emerald-600 text-white scale-[1.02] shadow-emerald-100`
                     : `${base} border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 hover:border-emerald-300`;
+            } else if (item.isNeutral) {
+                // Neutral/Supportive style (Yellow)
+                return isActive
+                    ? `${base} border-amber-600 bg-amber-600 text-white scale-[1.02] shadow-amber-100`
+                    : `${base} border-amber-200 bg-amber-50 text-amber-800 hover:bg-amber-100 hover:border-amber-300`;
             } else {
                 // Areas of focus style (Red)
                 return isActive
