@@ -1,235 +1,2315 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valentine's Day Orders</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #fdecef;
-      padding: 20px;
-    }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
-      text-align: center;
-      color: #c0392b;
-    }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .item input {
-      width: 70px;
-    }
-    .total {
-      margin-top: 15px;
-      font-size: 1.2em;
-      text-align: center;
-      font-weight: bold;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    .note {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #555;
-    }
-    .success {
-      display: none;
-      text-align: center;
-      margin-top: 15px;
-      color: green;
-      font-weight: bold;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 30px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      font-size: 0.85em;
-    }
-    th {
-      background: #f8d7da;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EQN Official Report Card & Comment Builder</title>
+    <!-- Tailwind CSS for modern web interface styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter for general interface readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&family=Montserrat:wght=400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for sleek modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Printable Card visibility rules on screen vs print modes */
+        .printable-card-wrapper {
+            display: none !important;
+        }
+
+        /* Print Styles to replicate the EQN Official Format */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            /* Hide entire interactive app interface during print */
+            header, footer, main, #customToast, .no-print {
+                display: none !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            /* Show ONLY the printable card container */
+            .printable-card-wrapper {
+                display: block !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 297mm; /* Standard A4 Landscape Width */
+                height: 210mm; /* Standard A4 Landscape Height */
+                margin: 0 !important;
+                padding: 10mm !important;
+                box-sizing: border-box;
+                background: white !important;
+            }
+            /* Explicit layout grids for reliable printing */
+            .print-grid {
+                display: grid !important;
+                grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+                gap: 2rem !important;
+                height: 100% !important;
+            }
+            .print-col-5 {
+                grid-column: span 5 / span 5 !important;
+            }
+            .print-col-7 {
+                grid-column: span 7 / span 7 !important;
+            }
+            /* Force landscape page settings */
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-full flex flex-col">
 
-<div class="container">
-  <h1>❤️ Valentine's Day Sale ❤️</h1>
+    <!-- Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-file-invoice text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 tracking-tight">EQN Academy Evaluation Portal</h1>
+                    <p class="text-xs text-slate-500 font-medium">Official Exam Preparation & Report Builder (Official EQN Layout Standards)</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="relative group">
+                    <input type="password" id="geminiApiKey" placeholder="Gemini API Key (Optional)" 
+                        class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all w-48"
+                        title="Add key to automatically sync English edits back into Spanish" />
+                    <span class="absolute -bottom-8 right-0 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        Allows automatic translation of English edits to Spanish
+                    </span>
+                </div>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">
+                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                    EQN 2026 System Active
+                </span>
+            </div>
+        </div>
+    </header>
 
-  <form id="orderForm">
-    <label>Your name</label>
-    <input type="text" id="senderName" required />
+    <!-- Main Content Area split into Input Wizard (Left) and Live Dual Previews (Right) -->
+    <main class="flex-grow max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col xl:flex-row gap-8 no-print">
 
-    <label>Your class</label>
-    <input type="text" id="senderClass" required />
+        <!-- LEFT SIDE: INTERACTIVE INPUT PANEL & ATTRIBUTES -->
+        <div class="w-full xl:w-7/12 flex flex-col gap-6">
+            
+            <!-- Card 1: Student & Teacher Metadata Setup -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm transition-all hover:shadow-md">
+                <div class="flex items-center space-x-2 pb-4 mb-5 border-b border-slate-100">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">1</span>
+                    <h2 class="font-bold text-slate-800">Student & Teacher Information</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Student Full Name -->
+                    <div>
+                        <label for="studentName" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Student's Full Name</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <input type="text" id="studentName" placeholder="e.g., Emma Smith Garcia" 
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all" />
+                        </div>
+                    </div>
 
-    <label>Your email</label>
-    <input type="email" id="email" required />
+                    <!-- Teacher Name -->
+                    <div>
+                        <label for="teacherName" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Teacher's Name</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </span>
+                            <input type="text" id="teacherName" placeholder="e.g., Sarah Jenkins" 
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all" />
+                        </div>
+                    </div>
 
-    <label>Person you are sending the gift to</label>
-    <input type="text" id="receiverName" required />
+                    <!-- Gender / Pronoun Selection -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Pronouns & Agreement</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="setPronoun('female')" id="btn-female" 
+                                class="pronoun-btn px-3 py-2 border rounded-xl text-xs font-medium text-slate-600 border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all focus:outline-none flex flex-col items-center">
+                                <span class="font-bold text-sm text-slate-800">Feminine</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">She / Her / Alumna</span>
+                            </button>
+                            <button type="button" onclick="setPronoun('male')" id="btn-male" 
+                                class="pronoun-btn px-3 py-2 border rounded-xl text-xs font-medium text-slate-600 border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all focus:outline-none flex flex-col items-center">
+                                <span class="font-bold text-sm text-slate-800">Masculine</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">He / Him / Alumno</span>
+                            </button>
+                            <button type="button" onclick="setPronoun('neutral')" id="btn-neutral" 
+                                class="pronoun-btn px-3 py-2 border rounded-xl text-xs font-medium text-slate-600 border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all focus:outline-none flex flex-col items-center">
+                                <span class="font-bold text-sm text-slate-800">Inclusive</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">They / Them</span>
+                            </button>
+                        </div>
+                    </div>
 
-    <label>Their class</label>
-    <input type="text" id="receiverClass" required />
+                    <!-- Level Selection -->
+                    <div>
+                        <label for="eqnLevel" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Cambridge / Oxford Level</label>
+                        <select id="eqnLevel" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm bg-white transition-all font-medium text-slate-700">
+                            <option value="Pre-starters">Pre-starters</option>
+                            <option value="Starters" selected>Starters</option>
+                            <option value="Movers">Movers</option>
+                            <option value="Flyers">Flyers</option>
+                            <option value="A2">A2</option>
+                            <option value="B1">B1</option>
+                            <option value="B2">B2</option>
+                            <option value="C1">C1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-    <h3>Choose your items</h3>
+            <!-- Card 2: 1-4 Skill Evaluations (Reading/Writing, Listening/Speaking, Overall, Effort) -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm transition-all hover:shadow-md">
+                <div class="flex items-center space-x-2 pb-4 mb-5 border-b border-slate-100">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">2</span>
+                    <h2 class="font-bold text-slate-800">Academic & Effort Grades (1 to 4 Scale)</h2>
+                </div>
 
-    <div class="item">🍫 Chocolate (1€)
-      <input type="number" min="0" value="0" data-price="1" class="qty" />
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Reading / Writing -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Reading / Writing</label>
+                        <div class="flex gap-2 justify-between">
+                            <button type="button" onclick="setScore('reading_writing', 1)" id="score-rw-1" class="score-btn-rw w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">1</button>
+                            <button type="button" onclick="setScore('reading_writing', 2)" id="score-rw-2" class="score-btn-rw w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">2</button>
+                            <button type="button" onclick="setScore('reading_writing', 3)" id="score-rw-3" class="score-btn-rw w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">3</button>
+                            <button type="button" onclick="setScore('reading_writing', 4)" id="score-rw-4" class="score-btn-rw w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">4</button>
+                        </div>
+                    </div>
+
+                    <!-- Listening / Speaking -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Listening / Speaking</label>
+                        <div class="flex gap-2 justify-between">
+                            <button type="button" onclick="setScore('listening_speaking', 1)" id="score-ls-1" class="score-btn-ls w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">1</button>
+                            <button type="button" onclick="setScore('listening_speaking', 2)" id="score-ls-2" class="score-btn-ls w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">2</button>
+                            <button type="button" onclick="setScore('listening_speaking', 3)" id="score-ls-3" class="score-btn-ls w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">3</button>
+                            <button type="button" onclick="setScore('listening_speaking', 4)" id="score-ls-4" class="score-btn-ls w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">4</button>
+                        </div>
+                    </div>
+
+                    <!-- Overall Grade -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Overall Grade</label>
+                        <div class="flex gap-2 justify-between">
+                            <button type="button" onclick="setScore('overall', 1)" id="score-ov-1" class="score-btn-ov w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">1</button>
+                            <button type="button" onclick="setScore('overall', 2)" id="score-ov-2" class="score-btn-ov w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">2</button>
+                            <button type="button" onclick="setScore('overall', 3)" id="score-ov-3" class="score-btn-ov w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">3</button>
+                            <button type="button" onclick="setScore('overall', 4)" id="score-ov-4" class="score-btn-ov w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">4</button>
+                        </div>
+                    </div>
+
+                    <!-- Effort / Attitude -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Effort / Attitude</label>
+                        <div class="flex gap-2 justify-between">
+                            <button type="button" onclick="setScore('effort_attitude', 1)" id="score-ea-1" class="score-btn-ea w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">1</button>
+                            <button type="button" onclick="setScore('effort_attitude', 2)" id="score-ea-2" class="score-btn-ea w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">2</button>
+                            <button type="button" onclick="setScore('effort_attitude', 3)" id="score-ea-3" class="score-btn-ea w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">3</button>
+                            <button type="button" onclick="setScore('effort_attitude', 4)" id="score-ea-4" class="score-btn-ea w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors">4</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Color-Coded Performance Attribute Selection Deck -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm transition-all hover:shadow-md flex flex-col gap-6">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">3</span>
+                        <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                            <span>Select Student Attributes</span>
+                            <span id="levelBadgeIndicator" class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider"></span>
+                        </h2>
+                    </div>
+                    <button type="button" onclick="clearSelections()" class="text-xs text-slate-400 hover:text-indigo-600 font-medium transition-colors">
+                        <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Reset Selection
+                    </button>
+                </div>
+
+                <!-- Helpful Guide legend -->
+                <div class="flex flex-wrap items-center gap-4 text-xs font-medium border-b border-slate-50 pb-2">
+                    <span class="text-slate-400 uppercase tracking-widest text-[9px] font-bold">LEGEND:</span>
+                    <span class="flex items-center space-x-1.5 text-emerald-800"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span>Positive Habit</span></span>
+                    <span class="flex items-center space-x-1.5 text-rose-800"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> <span>Needs Focus</span></span>
+                    <span class="flex items-center space-x-1.5 text-sky-800"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> <span>Summer Recommendation</span></span>
+                </div>
+
+                <!-- Category 1: Curriculum Acquisition -->
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        <i class="fa-solid fa-chart-line text-slate-400 mr-1.5"></i> 1. Content Acquisition (Select 1)
+                    </span>
+                    <div id="cat-syllabus" class="flex flex-wrap gap-2">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Category 2: Performance & Kudos -->
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        <i class="fa-solid fa-award text-slate-400 mr-1.5"></i> 2. Performance & Kudos (Select 1)
+                    </span>
+                    <div id="cat-performance" class="flex flex-wrap gap-2">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Category 3: Attitude & Conduct -->
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        <i class="fa-solid fa-face-laugh-beam text-slate-400 mr-1.5"></i> 3. Classroom Attitude & Conduct (Select up to 2)
+                    </span>
+                    <div id="cat-conduct" class="flex flex-wrap gap-2">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Category 4: Skills and Specific Needs -->
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        <i class="fa-solid fa-comments text-slate-400 mr-1.5"></i> 4. Specific Skills & Focus Areas (Select up to 2)
+                    </span>
+                    <div id="cat-skills" class="flex flex-wrap gap-2">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Category 5: Recommendation for the Summer -->
+                <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        <i class="fa-solid fa-umbrella-beach text-slate-400 mr-1.5"></i> 5. Summer Recommendations (Select up to 2)
+                    </span>
+                    <div id="cat-recommendations" class="flex flex-wrap gap-2">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: REAL-TIME PREVIEW PANEL AND PRINT SLATE -->
+        <div class="w-full xl:w-5/12 flex flex-col gap-6">
+            
+            <!-- Dual Preview / Interactive Report Tab Controls -->
+            <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <!-- Tab Headers -->
+                <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4 relative z-10">
+                    <div class="flex space-x-2">
+                        <button onclick="setActiveUtilityTab('bilingual')" id="util-tab-bilingual" class="utility-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition-all">
+                            <i class="fa-solid fa-language mr-1"></i> Bilingual Text Preview
+                        </button>
+                        <button onclick="setActiveUtilityTab('official')" id="util-tab-official" class="utility-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-transparent text-slate-400 hover:text-slate-200 transition-all">
+                            <i class="fa-solid fa-print mr-1"></i> Official Report Card (A4)
+                        </button>
+                    </div>
+                    <!-- AI Polish Button using Gemini API! -->
+                    <button onclick="polishWithAI()" id="aiButton" class="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 active:scale-95 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-md border border-white/10 transition-all flex items-center space-x-1">
+                        <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                        <span>✨ Polish with AI</span>
+                    </button>
+                </div>
+
+                <!-- SUB-CONTAINER 1: BILINGUAL TEXT PREVIEWS -->
+                <div id="util-container-bilingual" class="space-y-4">
+                    <div class="flex border-b border-white/5 pb-2 text-xs font-medium justify-between items-center">
+                        <div class="flex space-x-2">
+                            <button onclick="setActivePreviewTab('both')" id="tab-both" class="preview-tab px-3 py-1 border-b-2 border-indigo-500 text-indigo-400">Show Both</button>
+                            <button onclick="setActivePreviewTab('es')" id="tab-es" class="preview-tab px-3 py-1 border-b-2 border-transparent text-slate-400 hover:text-slate-200">Spanish Output (Parents)</button>
+                            <button onclick="setActivePreviewTab('en')" id="tab-en" class="preview-tab px-3 py-1 border-b-2 border-transparent text-slate-400 hover:text-slate-200">English Reference</button>
+                        </div>
+                        <div id="aiSyncStatus" class="text-[10px] font-bold text-slate-400 flex items-center">
+                            <i class="fa-solid fa-circle-check text-slate-500 mr-1"></i> AI Sync Ready
+                        </div>
+                    </div>
+
+                    <!-- SPANISH PREVIEW -->
+                    <div id="container-es" class="space-y-1">
+                        <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <span>Report Card (Spanish) - Editable</span>
+                            <span id="wordCountEs" class="bg-white/5 px-1.5 py-0.5 rounded text-slate-300">0 words</span>
+                        </div>
+                        <div class="bg-slate-950/40 border border-white/5 rounded-xl p-4 min-h-[120px] flex flex-col justify-between">
+                            <textarea id="generatedCommentEs" oninput="updatePrintFromSpanishTextarea()" 
+                                class="w-full bg-transparent text-slate-200 text-xs sm:text-sm leading-relaxed italic focus:outline-none resize-none h-28 focus:ring-1 focus:ring-indigo-500 rounded p-1"
+                                placeholder="Complete student details and make selections to generate the Spanish comment."></textarea>
+                            <div class="flex justify-end mt-3">
+                                <button onclick="copyToClipboard('es')" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-all flex items-center space-x-1">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span id="btnTextEs">Copy Spanish</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ENGLISH PREVIEW -->
+                    <div id="container-en" class="space-y-1">
+                        <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <span>English Reference - Editable (Will Auto-Sync to Spanish via AI)</span>
+                            <span id="wordCountEn" class="bg-white/5 px-1.5 py-0.5 rounded text-slate-300">0 words</span>
+                        </div>
+                        <div class="bg-slate-950/40 border border-white/5 rounded-xl p-4 min-h-[120px] flex flex-col justify-between">
+                            <textarea id="generatedCommentEn" oninput="triggerEnglishTextareaEdit()" 
+                                class="w-full bg-transparent text-slate-300 text-xs sm:text-sm leading-relaxed italic focus:outline-none resize-none h-28 focus:ring-1 focus:ring-indigo-500 rounded p-1"
+                                placeholder="English equivalent summary will show here."></textarea>
+                            <div class="flex justify-between items-center mt-3">
+                                <button onclick="triggerManualAiTranslate()" class="text-[10px] text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-arrows-rotate animate-pulse"></i> Force AI Sync to Spanish
+                                </button>
+                                <button onclick="copyToClipboard('en')" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-all flex items-center space-x-1">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span id="btnTextEn">Copy English</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual remarks editor -->
+                    <div class="bg-white/5 rounded-xl p-3 border border-white/5">
+                        <label for="customManualEdits" class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Custom Notes / Remarks (Appended to outputs)</label>
+                        <input type="text" id="customManualEdits" oninput="triggerCommentGeneration()" placeholder="e.g., y ha destacado mucho en las pruebas sorpresa." 
+                            class="w-full bg-slate-900/60 border border-white/10 rounded-lg py-1.5 px-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+                    </div>
+                </div>
+
+                <!-- SUB-CONTAINER 2: OFFICIAL REPORT CARD SCREEN PREVIEW -->
+                <div id="util-container-official" class="hidden space-y-4">
+                    <p class="text-xs text-indigo-200 bg-indigo-950/50 p-3 rounded-lg border border-indigo-500/20 leading-relaxed">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Below is the real-time layout replica of the <strong>Official EQN Report Card</strong>. Click the button to launch landscape document generation/printing.
+                    </p>
+                    
+                    <div class="flex justify-end">
+                        <button onclick="printReportCard()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md flex items-center space-x-2 transition-all">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Print / Download PDF (A4)</span>
+                        </button>
+                    </div>
+
+                    <!-- Visual scale preview box inside the app -->
+                    <div class="border border-slate-700 rounded-xl overflow-hidden bg-white text-slate-800 p-4 shadow-inner max-h-[500px] overflow-y-auto">
+                        <div class="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider mb-2">Scrollable Preview</div>
+                        <!-- Scale Wrapper to view inside the sidebar -->
+                        <div class="origin-top scale-[0.8] mx-auto w-[750px] bg-white text-black p-4 border border-slate-300 rounded shadow">
+                            <!-- Duplicate visual DOM of report card -->
+                            <div class="grid grid-cols-12 gap-4" style="font-family: sans-serif;">
+                                <!-- Left side (col-5) -->
+                                <div class="col-span-5 flex flex-col gap-3">
+                                    <div class="flex items-center justify-start mb-2" style="min-height: 45px;">
+                                        <!-- Logo image from Screenshot 2026-06-02 at 14.34.25_2.png in the upper-left corner -->
+                                        <img src="Screenshot 2026-06-02 at 14.34.25_2.png" alt="EQN Logo" style="height: 45px; width: auto; max-width: 150px; display: block; object-fit: contain;" onerror="this.onerror=null; this.src='https://placehold.co/150x45/ffffff/22409a?text=EQN+Academy';">
+                                    </div>
+                                    <div class="border border-slate-400 p-2 rounded">
+                                        <div class="text-[10px] font-bold text-slate-700">NAME:</div>
+                                        <div class="text-xs font-semibold py-1 min-h-[20px]" id="rep-name-prev"></div>
+                                    </div>
+                                    <div class="border border-slate-400 p-2 rounded">
+                                        <div class="text-[9px] font-bold text-slate-700">CAMBRIDGE LEVEL:</div>
+                                        <div class="text-xs font-semibold py-1 min-h-[20px]" id="rep-level-prev"></div>
+                                    </div>
+                                    <div class="border border-slate-400 p-2 rounded">
+                                        <div class="text-[9px] font-bold text-slate-700">TEACHER:</div>
+                                        <div class="text-xs font-semibold py-1 min-h-[20px]" id="rep-teacher-prev"></div>
+                                    </div>
+                                    <div class="border border-slate-400 p-2 rounded flex-grow">
+                                        <div class="text-[9px] font-bold text-slate-700">CONTENTS:</div>
+                                        <div class="text-[9px] text-slate-600 leading-relaxed pt-1" id="rep-contents-prev"></div>
+                                    </div>
+                                </div>
+                                <!-- Right side (col-7) -->
+                                <div class="col-span-7 flex flex-col gap-3">
+                                    <div class="border border-slate-400 p-3 rounded">
+                                        <!-- Row 1 -->
+                                        <div class="flex justify-between items-center py-1">
+                                            <span class="text-xs font-bold text-slate-700">Reading/Writing:</span>
+                                            <div class="flex gap-4">
+                                                <span id="p-rw-1" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">1</span>
+                                                <span id="p-rw-2" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">2</span>
+                                                <span id="p-rw-3" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">3</span>
+                                                <span id="p-rw-4" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">4</span>
+                                            </div>
+                                        </div>
+                                        <!-- Row 2 -->
+                                        <div class="flex justify-between items-center py-1">
+                                            <span class="text-xs font-bold text-slate-700">Listening/Speaking:</span>
+                                            <div class="flex gap-4">
+                                                <span id="p-ls-1" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">1</span>
+                                                <span id="p-ls-2" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">2</span>
+                                                <span id="p-ls-3" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">3</span>
+                                                <span id="p-ls-4" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">4</span>
+                                            </div>
+                                        </div>
+                                        <!-- Row 3 -->
+                                        <div class="flex justify-between items-center py-1">
+                                            <span class="text-xs font-bold text-slate-700">Overall grade:</span>
+                                            <div class="flex gap-4">
+                                                <span id="p-ov-1" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">1</span>
+                                                <span id="p-ov-2" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">2</span>
+                                                <span id="p-ov-3" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">3</span>
+                                                <span id="p-ov-4" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">4</span>
+                                            </div>
+                                        </div>
+                                        <!-- Row 4 -->
+                                        <div class="flex justify-between items-center py-1 border-b border-slate-200 pb-2">
+                                            <span class="text-xs font-bold text-slate-700">Effort/attitude:</span>
+                                            <div class="flex gap-4">
+                                                <span id="p-ea-1" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">1</span>
+                                                <span id="p-ea-2" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">2</span>
+                                                <span id="p-ea-3" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">3</span>
+                                                <span id="p-ea-4" class="w-5 h-5 rounded-full flex items-center justify-center text-xs">4</span>
+                                            </div>
+                                        </div>
+                                        <!-- Leyenda -->
+                                        <div class="mt-2 text-[8px] border border-slate-300">
+                                            <div class="bg-slate-200 font-bold p-1 text-center">LEYENDA</div>
+                                            <div class="grid grid-cols-12 border-t border-slate-300 p-1">
+                                                <div class="col-span-1 font-bold">1</div>
+                                                <div class="col-span-11">Se ha iniciado en la adquisición de los saberes básicos.</div>
+                                            </div>
+                                            <div class="grid grid-cols-12 border-t border-slate-300 p-1">
+                                                <div class="col-span-1 font-bold">2</div>
+                                                <div class="col-span-11">Ha adquirido los saberes básicos asociados a esta destreza.</div>
+                                            </div>
+                                            <div class="grid grid-cols-12 border-t border-slate-300 p-1">
+                                                <div class="col-span-1 font-bold font-sans">3</div>
+                                                <div class="col-span-11">Ha interiorizado los saberes básicos que le permiten aplicar lo aprendido en situaciones concretas.</div>
+                                            </div>
+                                            <div class="grid grid-cols-12 border-t border-slate-300 p-1 bg-slate-100">
+                                                <div class="col-span-1 font-bold">4</div>
+                                                <div class="col-span-11 font-semibold">Generaliza y aplica lo aprendido en diferentes contextos y situaciones.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border border-slate-400 p-3 rounded flex-grow">
+                                        <div class="text-[9px] font-bold text-slate-700">General comment:</div>
+                                        <div class="text-[10px] italic leading-normal pt-1" id="rep-comment-prev"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Comments Manager -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col gap-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-box-archive text-slate-400"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500">Session History Log (EQN)</h4>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="saveCurrentComment()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-plus-circle"></i> Save Current Student
+                        </button>
+                        <span id="logCount" class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full font-bold">0 saved</span>
+                    </div>
+                </div>
+
+                <!-- List/History Box -->
+                <div id="historyContainer" class="max-h-[160px] overflow-y-auto space-y-2 pr-1">
+                    <p class="text-xs text-slate-400 italic text-center py-4">No comments saved in this session yet.</p>
+                </div>
+
+                <!-- Batch Actions -->
+                <div id="batchActions" class="grid grid-cols-2 gap-2 mt-2 hidden">
+                    <button onclick="exportToCSV()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-file-csv"></i> Export logs to CSV
+                    </button>
+                    <button onclick="clearHistory()" class="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-1.5">
+                        <i class="fa-regular fa-trash-can"></i> Clear Log
+                    </button>
+                </div>
+            </div>
+
+            <!-- In-App Notification Toast -->
+            <div id="customToast" class="bg-slate-900 text-slate-100 px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-xs fixed bottom-6 right-6 transition-all duration-300 translate-y-24 opacity-0 pointer-events-none z-50 no-print">
+                <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <span id="toastMessage">Copied to clipboard!</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- REAL-TIME PIXEL-PERFECT REPORT CARD REPLICA OF THE OFFICIAL EQN FORMAT -->
+    <div class="printable-card-wrapper bg-white text-black" style="font-family: Arial, sans-serif; line-height: 1.4;">
+        <div class="print-grid grid grid-cols-12 gap-8 h-full" style="padding: 10px;">
+            
+            <!-- Left Side Column (Name, Level, Teacher, Contents) -->
+            <div class="print-col-5 col-span-5 flex flex-col justify-between h-full" style="padding-right: 15px;">
+                <!-- Logo Header Block matching Screenshot 2026-06-02 at 14.34.25_2.png structure -->
+                <div class="flex items-center gap-3 mb-4" style="align-self: flex-start; min-height: 65px;">
+                    <!-- Logo image in the upper-left corner -->
+                    <img src="Screenshot 2026-06-02 at 14.34.25_2.png" alt="EQN Logo" style="height: 65px; width: auto; max-width: 200px; object-fit: contain; display: block;" onerror="this.onerror=null; this.src='https://placehold.co/180x65/ffffff/22409a?text=EQN+English';">
+                </div>
+
+                <!-- NAME Section Box -->
+                <div class="border-2 border-black p-3 mb-4 rounded-sm flex-shrink-0" style="min-height: 80px;">
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 4px;">NAME:</div>
+                    <div id="rep-name-print" style="font-size: 16px; font-weight: bold; text-transform: uppercase;"></div>
+                </div>
+
+                <!-- CAMBRIDGE LEVEL Section Box -->
+                <div class="border-2 border-black p-3 mb-4 rounded-sm flex-shrink-0" style="min-height: 60px;">
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 4px;">CAMBRIDGE LEVEL:</div>
+                    <div id="rep-level-print" style="font-size: 15px; font-weight: bold;"></div>
+                </div>
+
+                <!-- TEACHER Section Box -->
+                <div class="border-2 border-black p-3 mb-4 rounded-sm flex-shrink-0" style="min-height: 60px;">
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 4px;">TEACHER:</div>
+                    <div id="rep-teacher-print" style="font-size: 15px; font-weight: bold;"></div>
+                </div>
+
+                <!-- CONTENTS Section Box (Fills dynamic Spanish text based on the level) -->
+                <div class="border-2 border-black p-3 rounded-sm flex-grow" style="min-height: 250px;">
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">CONTENTS:</div>
+                    <div id="rep-contents-print" style="font-size: 10px; line-height: 1.5; color: #222; text-align: justify;"></div>
+                </div>
+            </div>
+
+            <!-- Right Side Column (Grades Matrix, Leyenda, Comments) -->
+            <div class="print-col-7 col-span-7 flex flex-col justify-between h-full" style="padding-left: 15px;">
+                
+                <!-- Ratings Panel -->
+                <div class="border-2 border-black p-4 mb-4 rounded-sm">
+                    <!-- Reading/Writing row -->
+                    <div class="flex justify-between items-center py-2" style="border-bottom: 1px solid #ddd;">
+                        <span style="font-size: 14px; font-weight: bold;">Reading/Writing:</span>
+                        <div class="flex gap-6" style="margin-right: 15px;">
+                            <span id="print-rw-1" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">1</span>
+                            <span id="print-rw-2" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">2</span>
+                            <span id="print-rw-3" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">3</span>
+                            <span id="print-rw-4" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">4</span>
+                        </div>
+                    </div>
+
+                    <!-- Listening/Speaking row -->
+                    <div class="flex justify-between items-center py-2" style="border-bottom: 1px solid #ddd;">
+                        <span style="font-size: 14px; font-weight: bold;">Listening/Speaking:</span>
+                        <div class="flex gap-6" style="margin-right: 15px;">
+                            <span id="print-ls-1" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">1</span>
+                            <span id="print-ls-2" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">2</span>
+                            <span id="print-ls-3" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">3</span>
+                            <span id="print-ls-4" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">4</span>
+                        </div>
+                    </div>
+
+                    <!-- Overall Grade row -->
+                    <div class="flex justify-between items-center py-2" style="border-bottom: 1px solid #ddd;">
+                        <span style="font-size: 14px; font-weight: bold;">Overall grade:</span>
+                        <div class="flex gap-6" style="margin-right: 15px;">
+                            <span id="print-ov-1" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">1</span>
+                            <span id="print-ov-2" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">2</span>
+                            <span id="print-ov-3" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">3</span>
+                            <span id="print-ov-4" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">4</span>
+                        </div>
+                    </div>
+
+                    <!-- Effort/Attitude row -->
+                    <div class="flex justify-between items-center py-2">
+                        <span style="font-size: 14px; font-weight: bold;">Effort/attitude:</span>
+                        <div class="flex gap-6" style="margin-right: 15px;">
+                            <span id="print-ea-1" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">1</span>
+                            <span id="print-ea-2" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">2</span>
+                            <span id="print-ea-3" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">3</span>
+                            <span id="print-ea-4" class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold" style="border: 1px solid transparent;">4</span>
+                        </div>
+                    </div>
+
+                    <!-- LEYENDA reference table -->
+                    <div class="mt-4" style="border: 1.5px solid black; font-size: 9px; line-height: 1.4;">
+                        <div style="background-color: #E5E7EB; font-weight: bold; text-align: center; padding: 4px; border-bottom: 1.5px solid black; font-size: 10px;">LEYENDA</div>
+                        <div class="grid grid-cols-12" style="border-bottom: 1px solid black; padding: 4px;">
+                            <div class="col-span-1" style="font-weight: bold; text-align: center;">1</div>
+                            <div class="col-span-11">Se ha iniciado en la adquisición de los saberes básicos.</div>
+                        </div>
+                        <div class="grid grid-cols-12" style="border-bottom: 1px solid black; padding: 4px;">
+                            <div class="col-span-1" style="font-weight: bold; text-align: center;">2</div>
+                            <div class="col-span-11">Ha adquirido los saberes básicos asociados a esta destreza.</div>
+                        </div>
+                        <div class="grid grid-cols-12" style="border-bottom: 1px solid black; padding: 4px;">
+                            <div class="col-span-1" style="font-weight: bold; text-align: center;">3</div>
+                            <div class="col-span-11">Ha interiorizado los saberes básicos que le permiten aplicar lo aprendido en situaciones concretas.</div>
+                        </div>
+                        <div class="grid grid-cols-12" style="padding: 4px; background-color: #F3F4F6;">
+                            <div class="col-span-1" style="font-weight: bold; text-align: center;">4</div>
+                            <div class="col-span-11" style="font-weight: bold;">Generaliza y aplica lo aprendido en diferentes contextos y situaciones.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- General Comment Output Box -->
+                <div class="border-2 border-black p-4 rounded-sm flex-grow flex flex-col" style="min-height: 210px;">
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px;">General comment:</div>
+                    <div id="rep-comment-print" style="font-size: 11px; line-height: 1.6; font-style: italic; color: #111; text-align: justify; flex-grow: 1;"></div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="item">🍪 Cookies (1.50€)
-      <input type="number" min="0" value="0" data-price="1.5" class="qty" />
-    </div>
-    <div class="item">🌹 Rose (2€)
-      <input type="number" min="0" value="0" data-price="2" class="qty" />
-    </div>
 
-    <div class="total">Total: €<span id="total">0.00</span></div>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400 font-medium no-print">
+        <p>© 2026 EQN English Extracurricular Reports. Spain. Designed for Cambridge & Oxford preparation programs.</p>
+    </footer>
 
-    <button type="submit">Submit Order</button>
-  </form>
+    <script>
+        // Official EQN Course Syllabus Descriptions
+        const levels = {
+            "Pre-starters": {
+                descEs: "comprensión y uso básico de vocabulario simple, reconocimiento de palabras comunes y seguimiento de instrucciones sencillas.",
+                descEn: "understanding and basic use of simple vocabulary, recognition of common words, and following simple instructions.",
+                syllEs: "Comprensión y uso básico de vocabulario simple, reconocimiento de palabras comunes, seguimiento de instrucciones sencillas, identificación de objetos y colores, y participación en actividades básicas de escucha y habla. Hemos desarrollado habilidades básicas en reading, identificando palabras y sílabas simples en textos cortos; writing, practicando trazos y copiando letras; speaking, pronunciando vocabulario básico y frases sencillas; y listening, comprendiendo instrucciones simples y palabras comunes. Utilizamos actividades lúdicas y visuales para reforzar estas destrezas.",
+                syllEn: "Basic vocabulary comprehension, word recognition, following simple directions, color/object ID, and participating in basic listening/speaking play. Includes practice of elementary reading & tracing skills."
+            },
+            "Starters": {
+                descEs: "comprensión de instrucciones simples, uso de vocabulario básico y formación de frases cortas.",
+                descEn: "understanding simple instructions, using basic vocabulary, and forming short phrases.",
+                syllEs: "Comprensión de instrucciones simples, uso de vocabulario básico, reconocimiento de palabras comunes, formación de frases cortas, descripción de objetos y acciones, y participación en actividades básicas de escucha, habla y escritura. Hemos trabajado listening con canciones simples, speaking con diálogos básicos, reading con textos cortos, y writing escribiendo palabras y frases simples. Usamos juegos interactivos y actividades visuales para reforzar cada destreza.",
+                syllEn: "Understanding simple instructions, using basic vocabulary, forming short phrases, describing items, and introductory listening, speaking, and writing tasks with structured exercises."
+            },
+            "Movers": {
+                descEs: "comprensión de frases y textos sencillos, interacción en conversaciones básicas y manejo de gramática elemental.",
+                descEn: "comprehending simple phrases and texts, interacting in basic conversations, and handling elemental grammar.",
+                syllEs: "Comprensión de frases y textos sencillos, interacción en conversaciones básicas, descripción de eventos y experiencias, redacción de mensajes breves, y manejo de vocabulario y gramática elemental. Hemos practicado el listening con grabaciones cortas, speaking con diálogos simples, reading con textos breves, y writing escribiendo oraciones básicas. Utilizamos juegos y ejercicios interactivos para reforzar habilidades.",
+                syllEn: "Simple text comprehension, interactive dialogues, describing past/current events, brief message writing, and early grammar mechanics matched to Cambridge A1."
+            },
+            "Flyers": {
+                descEs: "comprensión de textos cortos, descripción de experiencias y redacción de composiciones simples.",
+                descEn: "comprehending short texts, describing experiences, and writing simple compositions.",
+                syllEs: "Comprensión de textos cortos, participación en conversaciones simples, descripción detallada de experiencias, redacción de textos breves, manejo de gramática y vocabulario básico, y realización de tareas cotidianas. Enfocamos en listening con diálogos más complejos, speaking con conversaciones detalladas, reading con textos variados, y writing con composiciones simples. Incorporamos actividades interactivas y proyectos.",
+                syllEn: "Short text comprehension, descriptive experience telling, simple compositions, and detailed conversational practice targeted for early A2 level."
+            },
+            "A2": {
+                descEs: "hablar sobre experiencias pasadas, hacer planes futuros, describir rutinas diarias y dar instrucciones simples.",
+                descEn: "talking about past experiences, making future plans, describing daily routines, and giving simple instructions.",
+                syllEs: "Hablar sobre experiencias pasadas, hacer planes futuros, describir rutinas diarias, expresar opiniones y sentimientos, y dar instrucciones simples. Practicamos listening con grabaciones variadas, speaking con interacciones cotidianas, reading con textos breves, y writing con composiciones simples. Usamos actividades participativas para consolidar habilidades, actividades interactivas y proyectos.",
+                syllEn: "Past and future structures, routines, basic opinions/feelings, and targeted listening/reading comprehension tasks for Cambridge A2 Key prep."
+            },
+            "B1": {
+                descEs: "comprensión y uso de frases comunes, redacción de textos sencillos y expresión de opiniones.",
+                descEn: "comprehension and use of common phrases, writing simple texts, and expressing opinions.",
+                syllEs: "Comprensión y uso de frases comunes, redacción de textos sencillos, expresión de opiniones, comprensión de temas familiares, participación en conversaciones cotidianas y manejo de situaciones del día a día. Trabajamos listening con diálogos y monólogos de la vida real, speaking con debates y discusiones, reading con textos más complejos, y writing con composiciones estructuradas.",
+                syllEn: "Intermediate life listening, structured debates, complex text reading, and paragraph-based composition structures for Cambridge B1 Preliminary."
+            },
+            "B2": {
+                descEs: "comprensión de textos complejos, comunicación fluida con hablantes nativos y participación en debates.",
+                descEn: "comprehending complex texts, communicating fluently with native speakers, and participating in debates.",
+                syllEs: "Comprensión de textos complejos, comunicación fluida con hablantes nativos, redacción clara y detallada, manejo de temas técnicos, expresión de opiniones detalladas y participación en debates formales. Desarrollamos listening con discursos y conversaciones avanzadas, speaking con presentaciones y debates, reading con textos complejos, y writing con ensayos y análisis crítico.",
+                syllEn: "Advanced analytical speaking, formal presentations, sophisticated reading comprehension, and argumentative essay drafts for Cambridge B2 First."
+            },
+            "C1": {
+                descEs: "comprensión profunda de textos complejos, comunicación fluida y espontánea, redacción clara y estructurada.",
+                descEn: "deep comprehension of complex texts, spontaneous communication, and writing clear, structured prose.",
+                syllEs: "Comprensión profunda de textos complejos, comunicación fluida y espontánea, redacción clara y estructurada, manejo de temas abstractos, expresión de opiniones matizadas y participación en debates avanzados. Perfeccionamos listening con discursos académicos y conversaciones avanzadas, speaking con argumentaciones complejas, reading con textos especializados, y writing con ensayos críticos y análisis profundos. Incorporamos debates y proyectos avanzados.",
+                syllEn: "Nuanced debating, complex academic composition, comprehension of specialized papers, and high-level abstract logic reasoning for Cambridge/Oxford C1."
+            }
+        };
 
-  <div class="note">
-    No online payment required.<br />
-    Come to <strong>Hollywood</strong> during <strong>recreo</strong><br />
-    any day from <strong>February 2nd–11th</strong> to pay.
-  </div>
+        // UI State management
+        let currentGender = 'female';
+        let currentPreviewTab = 'both';
+        let currentLevelGroup = null; // Either 'young' or 'higher'
+        let englishEditTimeout = null; // Timeout for debounce translation
+        
+        let selections = {
+            syllabus: null,
+            performance: null,
+            conduct: [],
+            skills: [],
+            recommendations: []
+        };
+        let savedHistory = [];
 
-  <div class="success" id="successMsg">Order saved successfully 💌</div>
+        // Ratings Object state
+        let cardScores = {
+            reading_writing: null,
+            listening_speaking: null,
+            overall: null,
+            effort_attitude: null
+        };
 
-  
-</div>
+        // Database structures (Young learners vs CEFR)
+        const databases = {
+            young: {
+                syllabus: [
+                    {
+                        id: 'syl_ease_yl',
+                        label: 'With ease',
+                        isPositive: true,
+                        es: "sigue con total facilidad los contenidos lúdicos y de vocabulario trabajados hasta el momento en el aula, demostrando una asimilación excelente.",
+                        en: "follows the playful curriculum and vocabulary work with complete ease, showing excellent assimilation."
+                    },
+                    {
+                        id: 'syl_norm_yl',
+                        label: 'With normal progress',
+                        isPositive: true,
+                        es: "sigue con absoluta normalidad las dinámicas y contenidos del nivel, asimilando correctamente el vocabulario programado.",
+                        en: "normally follows the classroom dynamics and lessons, appropriately learning the core vocabulary."
+                    },
+                    {
+                        id: 'syl_steady_yl',
+                        label: 'With steady progress',
+                        isPositive: true,
+                        es: "sigue de manera constante las lecciones y está logrando un progreso sumamente sólido y escalonado.",
+                        en: "follows the class lessons steadily, showing solid and structured ongoing progress."
+                    },
+                    {
+                        id: 'syl_diff_yl',
+                        label: 'With some difficulty',
+                        isPositive: false,
+                        es: "sigue con algunas dificultades de atención y retención las dinámicas de clase, requiriendo apoyo para afianzar palabras básicas.",
+                        en: "follows class dynamics with some concentration issues, needing extra reinforcement to retain basic terms."
+                    },
+                    {
+                        id: 'syl_not_acq_yl',
+                        label: 'Not acquired yet',
+                        isPositive: false,
+                        es: "presenta dificultades importantes para consolidar el vocabulario básico y seguir las instrucciones sencillas del salón.",
+                        en: "displays significant difficulties consolidating fundamental vocabulary and following simple classroom directions."
+                    }
+                ],
+                performance: [
+                    {
+                        id: 'perf_outstanding_yl',
+                        label: 'Outstanding effort',
+                        isPositive: true,
+                        es: "Ha obtenido un destacado progreso en su aprendizaje gracias a su alegría y dedicación constante. ¡Felicitaciones!",
+                        en: "They have made outstanding progress in learning due to their joy and constant dedication. Congratulations!"
+                    },
+                    {
+                        id: 'perf_good_yl',
+                        label: 'Consistent & enthusiastic',
+                        isPositive: true,
+                        es: "Ha demostrado ser un@ alumno@ muy responsable, capaz de cumplir alegremente con todos sus deberes diarios.",
+                        en: "They have shown themselves to be a very responsible student, happily completing all daily tasks."
+                    },
+                    {
+                        id: 'perf_interest_yl',
+                        label: 'Motivated by good marks',
+                        isPositive: true,
+                        es: "Demuestra un gran interés por superarse a diario y obtener excelentes calificaciones en sus tareas.",
+                        en: "They display a strong motivation to improve daily and achieve excellent marks in their tasks."
+                    },
+                    {
+                        id: 'perf_effort_yl',
+                        label: 'Great commitment',
+                        isPositive: true,
+                        es: "Ha demostrado un gran esfuerzo y una actitud muy positiva hacia el aprendizaje del inglés.",
+                        en: "They have shown great effort and a very positive attitude towards learning English."
+                    },
+                    {
+                        id: 'perf_underachieving_yl',
+                        label: 'Capable of more',
+                        isPositive: false,
+                        es: "Su rendimiento es adecuado, aunque tiene la capacidad para brillar mucho más si se lo propone y se esfuerza un poco más.",
+                        en: "Their performance is acceptable, although they have the natural capability to shine much brighter with a little more focus."
+                    },
+                    {
+                        id: 'perf_rushed_yl',
+                        label: 'Rushes to finish',
+                        isPositive: false,
+                        es: "Tiende a realizar sus tareas de manera demasiado apresurada, lo que hace que descuide la precisión de sus respuestas.",
+                        en: "They tend to complete their tasks too quickly, which leads to missing details and minor errors."
+                    }
+                ],
+                conduct: [
+                    {
+                        id: 'con_leader_yl',
+                        label: 'Positive role model',
+                        isPositive: true,
+                        es: "Es una persona madura para su edad que destaca como un ejemplo positivo para sus compañeros.",
+                        en: "They are exceptionally mature for their age, standing out as a positive role model for their peers."
+                    },
+                    {
+                        id: 'con_helpful_yl',
+                        label: 'Highly cooperative',
+                        isPositive: true,
+                        es: "Siempre se muestra muy cooperativo, listo para ayudar en el aula y mantener el orden del salón.",
+                        en: "They are always highly cooperative, ready to help in class and keep the room tidy."
+                    },
+                    {
+                        id: 'con_polite_quiet_yl',
+                        label: 'Respectful & polite',
+                        isPositive: true,
+                        es: "Es muy respetuoso y educado con sus profesores y compañeros, colaborando de manera excelente con las rutinas diarias.",
+                        en: "They are very respectful and polite with teachers and classmates, collaborating excellently with daily routines."
+                    },
+                    {
+                        id: 'con_distracted_yl',
+                        label: 'Easily distracted',
+                        isPositive: false,
+                        es: "Se despista con facilidad y se muestra algo inquiet@ durante las explicaciones, lo que ralentiza su aprendizaje.",
+                        en: "They easily lose focus and get a bit restless during explanations, which can slow down their learning."
+                    },
+                    {
+                        id: 'con_talkative_yl',
+                        label: 'Talkative / Chatty',
+                        isPositive: false,
+                        es: "Suele hablar mucho en español durante las explicaciones, lo que a veces interrumpe el ritmo del grupo.",
+                        en: "They tend to speak Spanish a lot during lessons, which occasionally disrupts the flow of the class."
+                    },
+                    {
+                        id: 'con_late_yl',
+                        label: 'Frequently arrives late',
+                        isPositive: false,
+                        es: "Suele llegar tarde a clase, lo que altera su inicio en las dinámicas y le cuesta engancharse de inmediato.",
+                        en: "They often arrive late to class, disrupting their early routine and make it harder to engage immediately."
+                    },
+                    {
+                        id: 'con_disruptive_yl',
+                        label: 'Acts impulsively',
+                        isPositive: false,
+                        es: "Suele actuar de manera impulsiva antes de pensar, lo que a veces dificulta que se concentre y escuche.",
+                        en: "They tend to act impulsively before thinking, which sometimes impacts their focus and listening ability."
+                    }
+                ],
+                skills: [
+                    {
+                        id: 'ski_vocab_yl',
+                        label: 'Quick vocabulary learner',
+                        isPositive: true,
+                        es: "posee una memoria estupenda y asimila las palabras nuevas con gran rapidez y naturalidad.",
+                        en: "possesses a wonderful memory and assimilates new vocabulary very quickly and naturally."
+                    },
+                    {
+                        id: 'ski_tracing_yl',
+                        label: 'Good fine motor tracing',
+                        isPositive: true,
+                        es: "demuestra una motricidad fina excelente, realizando trazos limpios y copiando letras y palabras con esmero.",
+                        en: "demonstrates excellent fine motor skills, tracing cleanly and copying letters and words with care."
+                    },
+                    {
+                        id: 'ski_phonics_yl',
+                        label: 'Enjoys songs & phonics',
+                        isPositive: true,
+                        es: "disfruta enormemente cantando canciones y repitiendo sonidos, logrando una pronunciación excelente.",
+                        en: "greatly enjoys singing songs and repeating sounds, achieving an excellent pronunciation."
+                    },
+                    {
+                        id: 'ski_visual_yl',
+                        label: 'Quick visual recall',
+                        isPositive: true,
+                        es: "demuestra una habilidad fantástica para reconocer tarjetas de vocabulario y patrones visuales con rapidez.",
+                        en: "demonstrates a fantastic ability to recognize flashcards and visual patterns quickly."
+                    },
+                    {
+                        id: 'ski_tracing_bad_yl',
+                        label: 'Struggles with tracing/writing',
+                        isPositive: false,
+                        es: "presenta dificultades al copiar palabras de la pizarra o realizar trazos precisos, necesitando guía constante.",
+                        en: "presents difficulties copying words from the board or doing precise tracing, needing constant guidance."
+                    },
+                    {
+                        id: 'ski_listening_bad_yl',
+                        label: 'Struggles with spoken directions',
+                        isPositive: false,
+                        es: "le cuesta seguir instrucciones habladas sencillas, distrayéndose con otros elementos de la clase.",
+                        en: "struggles to follow simple spoken directions, getting easily distracted by other elements in the room."
+                    },
+                    {
+                        id: 'ski_speaking_shy_yl',
+                        label: 'Shy in oral production',
+                        isPositive: false,
+                        es: "le falta algo de confianza para participar de manera voluntaria en las actividades de expresión oral.",
+                        en: "lacks confidence to voluntarily participate in speaking and oral communication tasks."
+                    },
+                    {
+                        id: 'ski_materials_yl',
+                        label: 'Forgets materials',
+                        isPositive: false,
+                        es: "frecuentemente olvida traer sus lápices, colores o cuaderno de actividades a clase.",
+                        en: "frequently forgets to bring their pencils, crayons, or activity workbook to class."
+                    },
+                    {
+                        id: 'ski_supervision_yl',
+                        label: 'Needs direct supervision',
+                        isPositive: false,
+                        es: "requiere supervisión directa constante para poder finalizar las actividades individuales a tiempo.",
+                        en: "requires constant direct supervision to complete individual tasks in a timely manner."
+                    }
+                ],
+                recommendations: [
+                    {
+                        id: 'rec_series_yl',
+                        label: 'Cartoons in English',
+                        isRecommendation: true,
+                        es: "Para las vacaciones, aconsejo dedicar un ratito a ver sus dibujos animados preferidos en inglés.",
+                        en: "For the holidays, I recommend spending a brief moment watching their favorite cartoons in English."
+                    },
+                    {
+                        id: 'rec_books_yl',
+                        label: 'Read simple storybooks',
+                        isRecommendation: true,
+                        es: "Sería de gran utilidad que lea cuentos sencillos ilustrados en inglés para familiarizarse con las palabras.",
+                        en: "It would be highly beneficial to read simple illustrated storybooks in English to become familiar with words."
+                    },
+                    {
+                        id: 'rec_games_yl',
+                        label: 'Vocabulary sticky notes',
+                        isRecommendation: true,
+                        es: "Sugiero usar notas adhesivas gratuitas en casa para etiquetar objetos cotidianos en inglés.",
+                        en: "I suggest placing sticky notes around the house to label everyday items in English for free."
+                    },
+                    {
+                        id: 'rec_songs_yl',
+                        label: 'Listen to free songs',
+                        isRecommendation: true,
+                        es: "Aconsejo escuchar canciones infantiles en inglés para acostumbrar el oído al idioma de forma gratuita.",
+                        en: "I advise listening to children's songs in English for free to naturally train their ear to the language."
+                    }
+                ]
+            },
+            higher: {
+                syllabus: [
+                    {
+                        id: 'syl_ease_hi',
+                        label: 'With ease',
+                        isPositive: true,
+                        es: "sigue con total facilidad los contenidos trabajados hasta el momento en el aula y demuestra una asimilación excelente de los objetivos propuestos.",
+                        en: "easily follows all contents covered in class so far and demonstrates excellent acquisition of the proposed level goals."
+                    },
+                    {
+                        id: 'syl_norm_hi',
+                        label: 'With normal progress',
+                        isPositive: true,
+                        es: "sigue con absoluta normalidad los contenidos trabajados hasta el momento en el aula, asimilando correctamente las bases teóricas.",
+                        en: "normally follows all the lessons worked in class, acquiring the core grammatical and vocabulary foundations without major issues."
+                    },
+                    {
+                        id: 'syl_high_hi',
+                        label: 'With high distinction',
+                        isPositive: true,
+                        es: "asimila los contenidos con distinción académica sobresaliente, demostrando dominio en cada módulo conceptual evaluado.",
+                        en: "assimilates the lesson topics with academic distinction, demonstrating clear mastery over each evaluated module."
+                    },
+                    {
+                        id: 'syl_diff_hi',
+                        label: 'With some difficulty',
+                        isPositive: false,
+                        es: "sigue con ciertas dificultades puntuales algunos de los contenidos trabajados hasta el momento en el aula, necesitando repasar para afianzar conceptos.",
+                        en: "follows some of the content covered in class with occasional difficulties, requiring extra review to fully reinforce concepts."
+                    },
+                    {
+                        id: 'syl_not_acq_hi',
+                        label: 'Not acquired yet',
+                        isPositive: false,
+                        es: "presenta dificultades importantes para consolidar los contenidos gramaticales y conceptuales del nivel, por lo que requiere apoyo continuo.",
+                        en: "displays significant difficulties consolidating the grammatical and conceptual structures of this level, requiring ongoing support."
+                    }
+                ],
+                performance: [
+                    {
+                        id: 'perf_outstanding_hi',
+                        label: 'Outstanding achievement',
+                        isPositive: true,
+                        es: "Ha obtenido un destacado rendimiento escolar fruto de su constante implicación. ¡Felicitaciones por este gran trabajo!",
+                        en: "They have achieved outstanding academic performance due to their constant engagement. Congratulations on this great effort!"
+                    },
+                    {
+                        id: 'perf_good_hi',
+                        label: 'Consistent & responsible',
+                        isPositive: true,
+                        es: "Ha demostrado ser capaz de cumplir de forma consistente y responsable con todos los deberes escolares diarios.",
+                        en: "They have shown their capability to consistently and responsibly meet all daily schoolwork tasks."
+                    },
+                    {
+                        id: 'perf_project_hi',
+                        label: 'Excellent submissions',
+                        isPositive: true,
+                        es: "Destaca especialmente en la entrega de proyectos y tareas opcionales que elevan su nivel académico general.",
+                        en: "They stand out in delivering optional assignments and projects that greatly elevate their general academic level."
+                    },
+                    {
+                        id: 'perf_underachieving_hi',
+                        label: 'Capable of more',
+                        isPositive: false,
+                        es: "Su rendimiento es adecuado, aunque tiene la capacidad necesaria para rendir a un nivel notablemente más alto si se lo propone.",
+                        en: "Their academic performance is acceptable, although they have the natural capability to achieve much higher results if they focus and try harder."
+                    },
+                    {
+                        id: 'perf_needs_commitment_hi',
+                        label: 'Needs more commitment',
+                        isPositive: false,
+                        es: "Debe adquirir un compromiso real y mayor constancia con sus deberes diarios en clase para poder revertir su rendimiento.",
+                        en: "They need to assume a true daily commitment and consistent effort with class objectives to boost their academic output."
+                    },
+                    {
+                        id: 'perf_rushed_hi',
+                        label: 'Underperforming from rushing',
+                        isPositive: false,
+                        es: "Trabaja con excesiva rapidez y descuida la calidad de sus entregas, lo que perjudica sus calificaciones finales.",
+                        en: "They work too quickly and overlook important detail, which unfortunately lowers their final evaluation marks."
+                    }
+                ],
+                conduct: [
+                    {
+                        id: 'con_leader_hi',
+                        label: 'Positive leader',
+                        isPositive: true,
+                        es: "Es una persona madura que destaca como un líder positivo que influye favorablemente en el clima de la clase.",
+                        en: "They are exceptionally mature, standing out as a positive leader who actively influences the classroom environment in a beneficial way."
+                    },
+                    {
+                        id: 'con_helpful_hi',
+                        label: 'Highly cooperative',
+                        isPositive: true,
+                        es: "Siempre se muestra muy cooperativo y está dispuesto a ayudar a sus compañeros y a mantener el orden del salón.",
+                        en: "They are highly cooperative, friendly to everyone, and always willing to support classmates and help keep the room organized."
+                    },
+                    {
+                        id: 'con_distracted_hi',
+                        label: 'Easily distracted',
+                        isPositive: false,
+                        es: "Se despista con bastante facilidad y se distrae durante las explicaciones, lo que puede ralentizar su ritmo de aprendizaje.",
+                        en: "They easily lose focus and get distracted during explanations, which can occasionally slow down their learning pace."
+                    },
+                    {
+                        id: 'con_talkative_hi',
+                        label: 'Talks out of turn',
+                        isPositive: false,
+                        es: "Suele hablar cuando no debe y en ocasiones interrumpe la clase, impidiendo que el grupo se concentre por completo.",
+                        en: "They tend to talk out of turn and sometimes interrupt, making it difficult for the group to maintain full concentration."
+                    },
+                    {
+                        id: 'con_late_hi',
+                        label: 'Frequently arrives late',
+                        isPositive: false,
+                        es: "Suele llegar tarde a clase, lo que interrumpe el ritmo inicial de la sesión y dificulta su concentración.",
+                        en: "They frequently arrive late to class, which disrupts the starting flow of the lesson and makes focusing difficult."
+                    },
+                    {
+                        id: 'con_nocontrol_hi',
+                        label: 'Lacks self-control',
+                        isPositive: false,
+                        es: "Necesita mejorar su autocontrol y regular su comportamiento para integrarse mejor en las actividades grupales de clase.",
+                        en: "They need to improve their self-control and behavior to better integrate into group activities in class."
+                    }
+                ],
+                skills: [
+                    {
+                        id: 'ski_vocab_hi',
+                        label: 'Extensive vocabulary',
+                        isPositive: true,
+                        es: "posee un vocabulario en inglés sumamente extenso y adquiere nuevos conceptos con gran naturalidad.",
+                        en: "possesses an extensive range of active vocabulary and acquires new concepts with natural ease."
+                    },
+                    {
+                        id: 'ski_writing_good_hi',
+                        label: 'Strong writing mechanics',
+                        isPositive: true,
+                        es: "redacta textos con excelente coherencia, estructurando sus ideas de forma clara y respetando las reglas de puntuación.",
+                        en: "writes texts with excellent coherence, structuring their ideas clearly and respecting punctuation rules."
+                    },
+                    {
+                        id: 'ski_reading_good_hi',
+                        label: 'Advanced reading comprehension',
+                        isPositive: true,
+                        es: "demuestra una fantástica comprensión lectora, asimilando textos complejos para su nivel y respondiendo preguntas con precisión.",
+                        en: "demonstrates fantastic reading comprehension, absorbing complex texts for their level and answering questions accurately."
+                    },
+                    {
+                        id: 'ski_listening_good_hi',
+                        label: 'Excellent listening skills',
+                        isPositive: true,
+                        es: "demuestra una agudeza auditiva excelente, captando los acentos y las instrucciones de audición complejas al primer intento.",
+                        en: "demonstrates excellent listening comprehension, picking up varying accents and complex audio instructions on the first attempt."
+                    },
+                    {
+                        id: 'ski_speaking_good_hi',
+                        label: 'Fluent oral interaction',
+                        isPositive: true,
+                        es: "se expresa verbalmente con una fluidez y pronunciación excelentes, sin temor a iniciar diálogos en inglés.",
+                        en: "expresses themselves verbally with excellent fluency and pronunciation, showing no hesitation to start conversations in English."
+                    },
+                    {
+                        id: 'ski_grammar_good_hi',
+                        label: 'Strong grammatical precision',
+                        isPositive: true,
+                        es: "aplica las reglas gramaticales teóricas de manera muy exacta y natural, tanto al hablar como al redactar.",
+                        en: "applies theoretical grammar rules very accurately and naturally, both in speaking and writing tasks."
+                    },
+                    {
+                        id: 'ski_writing_bad_hi',
+                        label: 'Struggles with spelling/writing',
+                        isPositive: false,
+                        es: "presenta dificultades en la expresión escrita, cometiendo errores frecuentes de ortografía y faltándole cohesión al redactar.",
+                        en: "experiences difficulties with written expression, making frequent spelling errors and lacking overall cohesion in writing."
+                    },
+                    {
+                        id: 'ski_reading_bad_hi',
+                        label: 'Struggles with text comprehension',
+                        isPositive: false,
+                        es: "le cuesta comprender textos escritos con rapidez, requiriendo leerlos varias veces para captar el sentido principal.",
+                        en: "struggles to comprehend written texts quickly, needing to read them several times to grasp the main meaning."
+                    },
+                    {
+                        id: 'ski_listening_bad_hi',
+                        label: 'Struggles with oral listening',
+                        isPositive: false,
+                        es: "presenta dificultades para seguir los ejercicios de escucha, perdiendo el hilo con facilidad y necesitando repeticiones adicionales.",
+                        en: "has difficulties following listening exercises, losing track easily and requiring extra repetitions of the audio."
+                    },
+                    {
+                        id: 'ski_oral_confidence_hi',
+                        label: 'Lacks oral confidence',
+                        isPositive: false,
+                        es: "le falta algo de confianza para participar de forma más activa en actividades de speaking y producciones orales.",
+                        en: "lacks self-confidence when speaking English, showing hesitation during oral communication tasks."
+                    },
+                    {
+                        id: 'ski_grammar_reinforce_hi',
+                        label: 'Needs grammar reinforcement',
+                        isPositive: false,
+                        es: "es recomendable que repase las estructuras gramaticales básicas vistas este curso para evitar pequeños errores constantes.",
+                        en: "it is highly recommended that they review core grammatical structures covered this year to avoid persistent minor errors."
+                    },
+                    {
+                        id: 'ski_prompt_hi',
+                        label: 'Confused by written instructions',
+                        isPositive: false,
+                        es: "se confunde con cierta frecuencia con las instrucciones por escrito, por lo que necesita apoyo adicional para iniciar sus tareas.",
+                        en: "gets confused occasionally by written instructions, requiring extra guidance to start their class activities."
+                    }
+                ],
+                recommendations: [
+                    {
+                        id: 'rec_series_hi',
+                        label: 'Watch English series',
+                        isRecommendation: true,
+                        es: "Para las vacaciones, aconsejo dedicar unos minutos a ver dibujos animados o series breves en inglés con subtítulos.",
+                        en: "For the holidays, I advise dedicating a few minutes a day to watching cartoons or short series in English with subtitles."
+                    },
+                    {
+                        id: 'rec_books_hi',
+                        label: 'Read simple books',
+                        isRecommendation: true,
+                        es: "Sería de gran utilidad que dedique un tiempo cada día a leer cuentos sencillos en inglés para consolidar su vocabulario.",
+                        en: "It would be highly beneficial to spend some time daily reading simple stories in English to consolidate vocabulary."
+                    },
+                    {
+                        id: 'rec_puzzles_hi',
+                        label: 'Free word crosswords',
+                        isRecommendation: true,
+                        es: "Sugiero realizar sopas de letras o pequeños crucigramas en inglés durante el verano de forma gratuita para retener estructuras.",
+                        en: "I suggest doing word search puzzles or quick crosswords in English over the summer to retain structures in a playful, free way."
+                    },
+                    {
+                        id: 'rec_apps_free_hi',
+                        label: 'Free educational apps',
+                        isRecommendation: true,
+                        es: "Le recomiendo practicar usando aplicaciones educativas gratuitas como Duolingo para mantener el idioma activo.",
+                        en: "I recommend practicing daily using free educational apps like Duolingo to keep the language active."
+                    }
+                ]
+            }
+        };
 
-<script>
-  // Paste your Apps Script Web App URL here (ends with /exec)
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyATisMVdeMB9123PoITqdbMDIgDXmQNeOFL2dqLy1EwVBVIWdmfEcyntXUaSP7IQap/exec";
+        window.onload = function() {
+            setPronoun('female'); // default
+            
+            // Set default empty score targets
+            clearScores();
 
-  const qtyInputs = document.querySelectorAll('.qty');
-  const totalSpan = document.getElementById('total');
-  const form = document.getElementById('orderForm');
-  const successMsg = document.getElementById('successMsg');
+            // Setup dropdown level logic triggers
+            document.getElementById('eqnLevel').addEventListener('change', () => {
+                evaluateLevelGroupChange();
+                updateLevelSyllabusInfo();
+                triggerCommentGeneration();
+            });
 
-  function updateTotal() {
-    let total = 0;
-    qtyInputs.forEach(i => (total += Number(i.value || 0) * Number(i.dataset.price)));
-    totalSpan.textContent = total.toFixed(2);
-  }
+            document.getElementById('studentName').addEventListener('input', () => {
+                triggerCommentGeneration();
+                syncOfficialFormFields();
+            });
+            document.getElementById('teacherName').addEventListener('input', syncOfficialFormFields);
+            
+            // Initial render
+            evaluateLevelGroupChange();
+            updateLevelSyllabusInfo();
+            triggerCommentGeneration();
+        }
 
-  qtyInputs.forEach(i => i.addEventListener('input', updateTotal));
+        // Split student name input to get first name dynamically
+        function getFirstName() {
+            const fullName = document.getElementById('studentName').value.trim();
+            if (!fullName) return "[Name]";
+            return fullName.split(' ')[0]; // Returns first word
+        }
 
-  function getItemCounts() {
-    const vals = Array.from(qtyInputs).map(i => Number(i.value || 0));
-    return {
-      chocolate: vals[0] || 0,
-      cookies: vals[1] || 0,
-      rose: vals[2] || 0
-    };
-  }
+        // Scoring matrix mechanics
+        function setScore(metric, value) {
+            cardScores[metric] = value;
+            
+            // Update app interactive button highlights
+            let prefix = "";
+            if (metric === 'reading_writing') prefix = "rw";
+            else if (metric === 'listening_speaking') prefix = "ls";
+            else if (metric === 'overall') prefix = "ov";
+            else if (metric === 'effort_attitude') prefix = "ea";
 
-  function buildItemsString(counts) {
-    const parts = [];
-    if (counts.chocolate) parts.push(`${counts.chocolate} x Chocolate`);
-    if (counts.cookies) parts.push(`${counts.cookies} x Cookies`);
-    if (counts.rose) parts.push(`${counts.rose} x Rose`);
-    return parts.join(', ');
-  }
+            // Clean active states for the row
+            document.querySelectorAll(`.score-btn-${prefix}`).forEach(btn => {
+                btn.className = `score-btn-${prefix} w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-sm font-bold hover:bg-slate-100 transition-colors`;
+            });
 
-  function setSubmitting(isSubmitting) {
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = isSubmitting;
-    btn.textContent = isSubmitting ? 'Submitting…' : 'Submit Order';
-  }
+            // Highlight chosen button
+            const activeBtn = document.getElementById(`score-${prefix}-${value}`);
+            if (activeBtn) {
+                activeBtn.className = `score-btn-${prefix} w-10 h-10 bg-indigo-600 text-white flex items-center justify-center text-sm font-bold rounded-full transition-all transform scale-110 shadow-md border-indigo-600`;
+            }
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    successMsg.style.display = 'none';
+            // Sync visual representation on printable certificates immediately
+            syncPrintScoreMarkers(prefix, value);
+        }
 
-    const counts = getItemCounts();
-    if (!counts.chocolate && !counts.cookies && !counts.rose) {
-      alert('Please select at least 1 item before submitting.');
-      return;
-    }
+        function clearScores() {
+            cardScores = {
+                reading_writing: null,
+                listening_speaking: null,
+                overall: null,
+                effort_attitude: null
+            };
+            document.querySelectorAll('[class^="score-btn-"]').forEach(btn => {
+                btn.className = btn.className.replace(/bg-indigo-600 text-white.*$/, 'border-slate-200 hover:bg-slate-100');
+            });
+            // Clean print circles
+            ['rw', 'ls', 'ov', 'ea'].forEach(prefix => {
+                for(let i=1; i<=4; i++) {
+                    const elPr = document.getElementById(`print-${prefix}-${i}`);
+                    const elScr = document.getElementById(`p-${prefix}-${i}`);
+                    if (elPr) { elPr.style.border = '1px solid transparent'; elPr.style.fontWeight = 'normal'; elPr.style.backgroundColor = 'transparent'; }
+                    if (elScr) { elScr.style.border = '1px solid transparent'; elScr.style.fontWeight = 'normal'; elScr.style.backgroundColor = 'transparent'; }
+                }
+            });
+        }
 
-    const payload = {
-      timestamp: new Date().toISOString(),
-      senderName: document.getElementById('senderName').value.trim(),
-      senderClass: document.getElementById('senderClass').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      receiverName: document.getElementById('receiverName').value.trim(),
-      receiverClass: document.getElementById('receiverClass').value.trim(),
-      chocolateQty: counts.chocolate,
-      cookiesQty: counts.cookies,
-      roseQty: counts.rose,
-      items: buildItemsString(counts),
-      totalEUR: totalSpan.textContent
-    };
+        // Draw a visual circle outline exactly around selected ratings like hand-graded
+        function syncPrintScoreMarkers(prefix, value) {
+            for(let i = 1; i <= 4; i++) {
+                const elementPrint = document.getElementById(`print-${prefix}-${i}`);
+                const elementScreen = document.getElementById(`p-${prefix}-${i}`);
+                
+                if (i === value) {
+                    // Set hand-marked style circle (Thick dark circle with slight background highlighting)
+                    if (elementPrint) {
+                        elementPrint.style.border = '2px solid black';
+                        elementPrint.style.fontWeight = 'bold';
+                        elementPrint.style.backgroundColor = '#E5E7EB';
+                    }
+                    if (elementScreen) {
+                        elementScreen.style.border = '2px solid black';
+                        elementScreen.style.fontWeight = 'bold';
+                        elementScreen.style.backgroundColor = '#E5E7EB';
+                    }
+                } else {
+                    if (elementPrint) {
+                        elementPrint.style.border = '1px solid transparent';
+                        elementPrint.style.fontWeight = 'normal';
+                        elementPrint.style.backgroundColor = 'transparent';
+                    }
+                    if (elementScreen) {
+                        elementScreen.style.border = '1px solid transparent';
+                        elementScreen.style.fontWeight = 'normal';
+                        elementScreen.style.backgroundColor = 'transparent';
+                    }
+                }
+            }
+        }
 
-    try {
-      setSubmitting(true);
+        // Handle adaptive category menus based on Level group (Young learners vs CEFR)
+        function evaluateLevelGroupChange() {
+            const level = document.getElementById('eqnLevel').value;
+            const isYoung = ["Pre-starters", "Starters", "Movers", "Flyers"].includes(level);
+            const targetGroup = isYoung ? 'young' : 'higher';
 
-            // Send as "application/x-www-form-urlencoded" (a "simple" request) so it works reliably from GitHub Pages.
-      const formBody = new URLSearchParams({ payload: JSON.stringify(payload) }).toString();
+            if (currentLevelGroup !== targetGroup) {
+                currentLevelGroup = targetGroup;
+                
+                // Clear state
+                selections = {
+                    syllabus: null,
+                    performance: null,
+                    conduct: [],
+                    skills: [],
+                    recommendations: []
+                };
 
-      const res = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: formBody
-      });
+                // Update UI badge
+                const levelBadge = document.getElementById('levelBadgeIndicator');
+                levelBadge.textContent = isYoung ? "Young Learners Menu" : "Teen & Adult Menu";
+                if (isYoung) {
+                    levelBadge.className = "text-[10px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider";
+                } else {
+                    levelBadge.className = "text-[10px] bg-violet-100 text-violet-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider";
+                }
 
-      // If we get here, the browser sent the request.
-      // (We cannot read the response when mode is 'no-cors'.)
+                renderAttributes();
+                showToast(`Switched options to ${isYoung ? 'Young Learners' : 'CEFR levels'}`);
+            }
+        }
 
-      form.reset();
-      updateTotal();
-      successMsg.style.display = 'block';
+        // Syncs official form fields onto the PDF preview and printable DOM
+        function syncOfficialFormFields() {
+            const fullName = document.getElementById('studentName').value.trim();
+            const teacher = document.getElementById('teacherName').value.trim();
+            const level = document.getElementById('eqnLevel').value;
 
-    } catch (err) {
-      alert('Sorry — your order could not be saved. Please try again or tell a teacher.\n\n' + err.message);
-      console.error(err);
-    } finally {
-      setSubmitting(false);
-    }
-  });
+            // Fill prints
+            document.getElementById('rep-name-print').textContent = fullName ? fullName : "------------------------";
+            document.getElementById('rep-level-print').textContent = level;
+            document.getElementById('rep-teacher-print').textContent = teacher ? teacher : "------------------------";
 
-  updateTotal();
-</script>
+            // Fill screen previews
+            document.getElementById('rep-name-prev').textContent = fullName ? fullName : "------------------------";
+            document.getElementById('rep-level-prev').textContent = level;
+            document.getElementById('rep-teacher-prev').textContent = teacher ? teacher : "------------------------";
+        }
 
+        // Fills curriculum contents with raw Spanish referenced textbook text
+        function updateLevelSyllabusInfo() {
+            const currentLvl = document.getElementById('eqnLevel').value;
+            
+            // Set printable box
+            document.getElementById('rep-contents-print').textContent = levels[currentLvl].syllEs;
+            // Set screen preview box
+            document.getElementById('rep-contents-prev').textContent = levels[currentLvl].syllEs;
 
+            syncOfficialFormFields();
+        }
+
+        // Dynamic Attribute Badge Generator
+        function renderAttributes() {
+            const db = databases[currentLevelGroup];
+
+            const sylContainer = document.getElementById('cat-syllabus');
+            const perfContainer = document.getElementById('cat-performance');
+            const conContainer = document.getElementById('cat-conduct');
+            const skiContainer = document.getElementById('cat-skills');
+            const recContainer = document.getElementById('cat-recommendations');
+
+            // 1. Content Progress Badges
+            sylContainer.innerHTML = db.syllabus.map(item => `
+                <button type="button" onclick="selectSyllabus('${item.id}')" id="badge-${item.id}"
+                    class="${getButtonClass(item, selections.syllabus === item.id)}">
+                    ${item.label}
+                </button>
+            `).join('');
+
+            // 2. Performance Achievement Badges
+            perfContainer.innerHTML = db.performance.map(item => `
+                <button type="button" onclick="selectPerformance('${item.id}')" id="badge-${item.id}"
+                    class="${getButtonClass(item, selections.performance === item.id)}">
+                    ${item.label}
+                </button>
+            `).join('');
+
+            // 3. Conduct & Attitude Badges
+            conContainer.innerHTML = db.conduct.map(item => `
+                <button type="button" onclick="selectConduct('${item.id}')" id="badge-${item.id}"
+                    class="${getButtonClass(item, selections.conduct.includes(item.id))}">
+                    ${item.label}
+                </button>
+            `).join('');
+
+            // 4. Skills Badges
+            skiContainer.innerHTML = db.skills.map(item => `
+                <button type="button" onclick="selectSkill('${item.id}')" id="badge-${item.id}"
+                    class="${getButtonClass(item, selections.skills.includes(item.id))}">
+                    ${item.label}
+                </button>
+            `).join('');
+
+            // 5. Summer Recommendations Badges
+            recContainer.innerHTML = db.recommendations.map(item => `
+                <button type="button" onclick="selectRecommendation('${item.id}')" id="badge-${item.id}"
+                    class="${getButtonClass(item, selections.recommendations.includes(item.id))}">
+                    ${item.label}
+                </button>
+            `).join('');
+        }
+
+        // Style selector mapping
+        function getButtonClass(item, isActive) {
+            const base = "badge px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all text-left shadow-sm active:scale-95 duration-150";
+            
+            if (item.isRecommendation) {
+                // Summer Recommendations style (Blue)
+                return isActive 
+                    ? `${base} border-sky-600 bg-sky-600 text-white scale-[1.02] shadow-sky-100`
+                    : `${base} border-sky-200 bg-sky-50 text-sky-800 hover:bg-sky-100 hover:border-sky-300`;
+            } else if (item.isPositive) {
+                // Positive Habit style (Green)
+                return isActive
+                    ? `${base} border-emerald-600 bg-emerald-600 text-white scale-[1.02] shadow-emerald-100`
+                    : `${base} border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 hover:border-emerald-300`;
+            } else {
+                // Areas of focus style (Red)
+                return isActive
+                    ? `${base} border-rose-600 bg-rose-600 text-white scale-[1.02] shadow-rose-100`
+                    : `${base} border-rose-200 bg-rose-50 text-rose-800 hover:bg-rose-100 hover:border-rose-300`;
+            }
+        }
+
+        function selectSyllabus(id) {
+            selections.syllabus = (selections.syllabus === id) ? null : id;
+            updateSyllabusUI();
+            triggerCommentGeneration();
+        }
+        function updateSyllabusUI() {
+            const db = databases[currentLevelGroup];
+            db.syllabus.forEach(item => {
+                const el = document.getElementById(`badge-${item.id}`);
+                if (el) el.className = getButtonClass(item, selections.syllabus === item.id);
+            });
+        }
+
+        function selectPerformance(id) {
+            selections.performance = (selections.performance === id) ? null : id;
+            updatePerformanceUI();
+            triggerCommentGeneration();
+        }
+        function updatePerformanceUI() {
+            const db = databases[currentLevelGroup];
+            db.performance.forEach(item => {
+                const el = document.getElementById(`badge-${item.id}`);
+                if (el) el.className = getButtonClass(item, selections.performance === item.id);
+            });
+        }
+
+        function selectConduct(id) {
+            const index = selections.conduct.indexOf(id);
+            if (index > -1) {
+                selections.conduct.splice(index, 1);
+            } else {
+                if (selections.conduct.length >= 2) selections.conduct.shift();
+                selections.conduct.push(id);
+            }
+            updateConductUI();
+            triggerCommentGeneration();
+        }
+        function updateConductUI() {
+            const db = databases[currentLevelGroup];
+            db.conduct.forEach(item => {
+                const el = document.getElementById(`badge-${item.id}`);
+                if (el) el.className = getButtonClass(item, selections.conduct.includes(item.id));
+            });
+        }
+
+        function selectSkill(id) {
+            const index = selections.skills.indexOf(id);
+            if (index > -1) {
+                selections.skills.splice(index, 1);
+            } else {
+                if (selections.skills.length >= 2) selections.skills.shift();
+                selections.skills.push(id);
+            }
+            updateSkillsUI();
+            triggerCommentGeneration();
+        }
+        function updateSkillsUI() {
+            const db = databases[currentLevelGroup];
+            db.skills.forEach(item => {
+                const el = document.getElementById(`badge-${item.id}`);
+                if (el) el.className = getButtonClass(item, selections.skills.includes(item.id));
+            });
+        }
+
+        function selectRecommendation(id) {
+            const index = selections.recommendations.indexOf(id);
+            if (index > -1) {
+                selections.recommendations.splice(index, 1);
+            } else {
+                if (selections.recommendations.length >= 2) selections.recommendations.shift();
+                selections.recommendations.push(id);
+            }
+            updateRecommendationsUI();
+            triggerCommentGeneration();
+        }
+        function updateRecommendationsUI() {
+            const db = databases[currentLevelGroup];
+            db.recommendations.forEach(item => {
+                const el = document.getElementById(`badge-${item.id}`);
+                if (el) el.className = getButtonClass(item, selections.recommendations.includes(item.id));
+            });
+        }
+
+        function setPronoun(gender) {
+            currentGender = gender;
+            document.querySelectorAll('.pronoun-btn').forEach(btn => {
+                btn.className = "pronoun-btn px-3 py-2 border rounded-xl text-xs font-medium text-slate-600 border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all focus:outline-none flex flex-col items-center";
+            });
+            const activeBtn = document.getElementById(`btn-${gender}`);
+            activeBtn.className = "pronoun-btn px-3 py-2 border-2 rounded-xl text-xs font-bold bg-indigo-50 border-indigo-600 text-indigo-800 transition-all focus:outline-none flex flex-col items-center shadow-sm";
+            triggerCommentGeneration();
+        }
+
+        function setActiveUtilityTab(tab) {
+            document.querySelectorAll('.utility-tab').forEach(btn => {
+                btn.className = "utility-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-transparent text-slate-400 hover:text-slate-200 transition-all";
+            });
+            document.getElementById(`util-tab-${tab}`).className = "utility-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition-all";
+
+            if (tab === 'bilingual') {
+                document.getElementById('util-container-bilingual').classList.remove('hidden');
+                document.getElementById('util-container-official').classList.add('hidden');
+            } else {
+                document.getElementById('util-container-bilingual').classList.add('hidden');
+                document.getElementById('util-container-official').classList.remove('hidden');
+            }
+        }
+
+        function setActivePreviewTab(tab) {
+            currentPreviewTab = tab;
+            document.querySelectorAll('.preview-tab').forEach(btn => {
+                btn.className = "preview-tab px-3 py-1 border-b-2 border-transparent text-slate-400 hover:text-slate-200";
+            });
+            document.getElementById(`tab-${tab}`).className = "preview-tab px-3 py-1 border-b-2 border-indigo-500 text-indigo-400";
+
+            if (tab === 'both') {
+                document.getElementById('container-es').classList.remove('hidden');
+                document.getElementById('container-en').classList.remove('hidden');
+            } else if (tab === 'es') {
+                document.getElementById('container-es').classList.remove('hidden');
+                document.getElementById('container-en').classList.add('hidden');
+            } else {
+                document.getElementById('container-es').classList.add('hidden');
+                document.getElementById('container-en').classList.remove('hidden');
+            }
+        }
+
+        function clearSelections() {
+            selections = {
+                syllabus: null,
+                performance: null,
+                conduct: [],
+                skills: [],
+                recommendations: []
+            };
+            document.getElementById('customManualEdits').value = '';
+            
+            clearScores();
+            updateSyllabusUI();
+            updatePerformanceUI();
+            updateConductUI();
+            updateSkillsUI();
+            updateRecommendationsUI();
+            
+            triggerCommentGeneration();
+            showToast("Selections successfully reset!");
+        }
+
+        function getSpanishPronouns() {
+            if (currentGender === 'female') {
+                return {
+                    subject: "ella",
+                    alumno: "una alumna",
+                    possessive: "su",
+                    obj: "la",
+                    agree: "a",
+                    pron: "Ella"
+                };
+            } else if (currentGender === 'male') {
+                return {
+                    subject: "él",
+                    alumno: "un alumno",
+                    possessive: "su",
+                    obj: "lo",
+                    agree: "o",
+                    pron: "Él"
+                };
+            } else {
+                return {
+                    subject: "ellos",
+                    alumno: "un alumno/a",
+                    possessive: "su",
+                    obj: "les",
+                    agree: "o/a",
+                    pron: "Ellos"
+                };
+            }
+        }
+
+        function getEnglishPronouns() {
+            if (currentGender === 'female') {
+                return {
+                    subject: "she",
+                    student: "student",
+                    possessive: "her",
+                    subjectCap: "She",
+                    possessiveCap: "Her",
+                    verbBe: "is",
+                    pron: "She"
+                };
+            } else if (currentGender === 'male') {
+                return {
+                    subject: "he",
+                    student: "student",
+                    possessive: "his",
+                    subjectCap: "He",
+                    possessiveCap: "His",
+                    verbBe: "is",
+                    pron: "He"
+                };
+            } else {
+                return {
+                    subject: "they",
+                    student: "student",
+                    possessive: "their",
+                    subjectCap: "They",
+                    possessiveCap: "Their",
+                    verbBe: "are",
+                    pron: "They"
+                };
+            }
+        }
+
+        // Main comment generation logic
+        function triggerCommentGeneration() {
+            const firstName = getFirstName();
+            const level = document.getElementById('eqnLevel').value;
+            const customText = document.getElementById('customManualEdits').value.trim();
+
+            const pEs = getSpanishPronouns();
+            const pEn = getEnglishPronouns();
+            const levelData = levels[level];
+            const db = databases[currentLevelGroup];
+
+            // 1. Core intro (Level description + Syllabus)
+            let esIntro = "";
+            let enIntro = "";
+
+            if (selections.syllabus) {
+                const sObj = db.syllabus.find(x => x.id === selections.syllabus);
+                esIntro = `En las clases de preparación para el nivel ${level} de EQN, ${firstName} ${applyTokens(sObj.es, firstName, pEs, levelData.descEs)}`;
+                enIntro = `In the EQN preparation classes for ${level}, ${firstName} ${applyTokens(sObj.en, firstName, pEn, levelData.descEn)}`;
+            } else {
+                esIntro = `En las clases del nivel ${level} de EQN, ${firstName} sigue de forma regular los contenidos programados orientados a la ${levelData.descEs}`;
+                enIntro = `In the ${level} exam preparation class, ${firstName} regularly engages with the curriculum goals geared towards ${levelData.descEn}`;
+            }
+
+            // 2. Performance Achievement
+            let esPerf = "";
+            let enPerf = "";
+            if (selections.performance) {
+                const pObj = db.performance.find(x => x.id === selections.performance);
+                esPerf = applyTokens(pObj.es, firstName, pEs, levelData.descEs);
+                enPerf = applyTokens(pObj.en, firstName, pEn, levelData.descEn);
+            }
+
+            // 3. Conduct & Classroom Behavior
+            let esCond = "";
+            let enCond = "";
+            if (selections.conduct.length > 0) {
+                const cItems = selections.conduct.map(id => db.conduct.find(x => x.id === id));
+                esCond = cItems.map(item => applyTokens(item.es, firstName, pEs, levelData.descEs)).join(" Además, ");
+                enCond = cItems.map(item => applyTokens(item.en, firstName, pEn, levelData.descEn)).join(" Additionally, ");
+            }
+
+            // 4. Grammar & Skills Focus
+            let esSkills = "";
+            let enSkills = "";
+            if (selections.skills.length > 0) {
+                const skItems = selections.skills.map(id => db.skills.find(x => x.id === id));
+                esSkills = skItems.map(item => applyTokens(item.es, firstName, pEs, levelData.descEs)).join(" Asimismo, ");
+                enSkills = skItems.map(item => applyTokens(item.en, firstName, pEn, levelData.descEn)).join(" Likewise, ");
+            }
+
+            // 5. Summer Recommendations
+            let esRec = "";
+            let enRec = "";
+            if (selections.recommendations.length > 0) {
+                const recItems = selections.recommendations.map(id => db.recommendations.find(x => x.id === id));
+                esRec = recItems.map(item => applyTokens(item.es, firstName, pEs, levelData.descEs)).join(" ");
+                enRec = recItems.map(item => applyTokens(item.en, firstName, pEn, levelData.descEn)).join(" ");
+            }
+
+            // Assembly
+            let fullParagraphEs = `${esIntro} ${esPerf} ${esCond} ${esSkills}`;
+            let fullParagraphEn = `${enIntro} ${enPerf} ${enCond} ${enSkills}`;
+
+            // Deduplicate names with clean pronoun loops
+            fullParagraphEs = naturalizeSpanishGrammar(fullParagraphEs, firstName, pEs);
+            fullParagraphEn = naturalizeEnglishGrammar(fullParagraphEn, firstName, pEn);
+
+            if (esRec) {
+                fullParagraphEs += " " + esRec;
+                fullParagraphEn += " " + enRec;
+            }
+
+            if (customText) {
+                let formattedCustom = customText;
+                if (!formattedCustom.endsWith('.') && !formattedCustom.endsWith('!')) {
+                    formattedCustom += ".";
+                }
+                fullParagraphEs += " " + formattedCustom;
+                fullParagraphEn += " Also, " + formattedCustom;
+            }
+
+            fullParagraphEs = cleanPunctuationAndSpacing(fullParagraphEs);
+            fullParagraphEn = cleanPunctuationAndSpacing(fullParagraphEn);
+
+            // Pop values into editable fields
+            document.getElementById('generatedCommentEs').value = fullParagraphEs;
+            document.getElementById('generatedCommentEn').value = fullParagraphEn;
+
+            // Fill visual Report Card components (Print + Preview)
+            document.getElementById('rep-comment-print').textContent = fullParagraphEs;
+            document.getElementById('rep-comment-prev').textContent = fullParagraphEs;
+
+            updateMetrics(fullParagraphEs, fullParagraphEn);
+            syncOfficialFormFields();
+        }
+
+        function applyTokens(str, name, p, levelDesc) {
+            let out = str;
+            out = out.replace(/{Name}/g, name);
+            out = out.replace(/{levelDesc}/g, levelDesc);
+            if (p.agree) {
+                out = out.replace(/@a/g, p.agree === 'a' ? 'a' : 'o');
+                out = out.replace(/@alumno/g, p.alumno);
+                out = out.replace(/@él/g, p.subject);
+            }
+            if (p.subjectCap) {
+                out = out.replace(/{subject}/g, p.subject);
+                out = out.replace(/{Subject}/g, p.subjectCap);
+                out = out.replace(/{possessive}/g, p.possessive);
+                out = out.replace(/{Possessive}/g, p.possessiveCap);
+                out = out.replace(/{verbBe}/g, p.verbBe);
+            }
+            return out;
+        }
+
+        function naturalizeSpanishGrammar(paragraph, name, pEs) {
+            let sentences = paragraph.split(". ");
+            for (let i = 1; i < sentences.length; i++) {
+                if (sentences[i].startsWith(name)) {
+                    sentences[i] = sentences[i].replace(name, pEs.pron);
+                }
+            }
+            return sentences.join(". ");
+        }
+
+        function naturalizeEnglishGrammar(paragraph, name, pEn) {
+            let sentences = paragraph.split(". ");
+            for (let i = 1; i < sentences.length; i++) {
+                if (sentences[i].startsWith(name)) {
+                    sentences[i] = sentences[i].replace(name, pEn.subjectCap);
+                }
+            }
+            return sentences.join(". ");
+        }
+
+        function cleanPunctuationAndSpacing(text) {
+            return text
+                .replace(/\s+/g, ' ')
+                .replace(/\s\./g, '.')
+                .replace(/\s,/g, ',')
+                .replace(/\.{2,}/g, '.')
+                .trim();
+        }
+
+        function updateMetrics(esText, enText) {
+            if (esText !== null) {
+                const wordsEs = esText ? esText.split(/\s+/).filter(w => w.length > 0).length : 0;
+                document.getElementById('wordCountEs').textContent = `${wordsEs} words`;
+            }
+            if (enText !== null) {
+                const wordsEn = enText ? enText.split(/\s+/).filter(w => w.length > 0).length : 0;
+                document.getElementById('wordCountEn').textContent = `${wordsEn} words`;
+            }
+        }
+
+        // Auto-Translates English edits back to Spanish when user types
+        function triggerEnglishTextareaEdit() {
+            const textEn = document.getElementById('generatedCommentEn').value;
+            updateMetrics(null, textEn);
+
+            // Clear previous timeout
+            clearTimeout(englishEditTimeout);
+
+            const keyInput = document.getElementById('geminiApiKey').value.trim();
+            const statusIndicator = document.getElementById('aiSyncStatus');
+
+            if (keyInput) {
+                if (statusIndicator) {
+                    statusIndicator.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-amber-400 mr-1"></i> AI Translate Syncing...`;
+                    statusIndicator.className = "text-[10px] font-bold text-amber-400 flex items-center";
+                }
+                
+                // Debounce translation payload for 1.5 seconds
+                englishEditTimeout = setTimeout(() => {
+                    translateEnglishToSpanish(textEn);
+                }, 1500);
+            } else {
+                if (statusIndicator) {
+                    statusIndicator.innerHTML = `<i class="fa-solid fa-circle-info text-slate-400 mr-1"></i> Enter API Key above to auto-sync English edits`;
+                    statusIndicator.className = "text-[10px] font-bold text-slate-400 flex items-center";
+                }
+            }
+        }
+
+        // Manual button click to sync AI Translation
+        function triggerManualAiTranslate() {
+            const textEn = document.getElementById('generatedCommentEn').value;
+            const keyInput = document.getElementById('geminiApiKey').value.trim();
+            if (!keyInput) {
+                showToast("Please enter your Gemini API Key at the top first!");
+                return;
+            }
+            translateEnglishToSpanish(textEn);
+        }
+
+        // Call Gemini to translate and sync fields
+        async function translateEnglishToSpanish(textEn) {
+            const keyInput = document.getElementById('geminiApiKey').value.trim();
+            const statusIndicator = document.getElementById('aiSyncStatus');
+            if (!keyInput) return;
+
+            try {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${keyInput}`;
+                const prompt = `Translate the following English report card evaluation comment into natural, warm, and professional Spanish suitable for parents in Spain. Maintain identical name, level context, and tone. Do not write any preamble or conversational explanation, just provide the exact translation block.
+                
+                English Evaluation: "${textEn}"`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        responseMimeType: "text/plain"
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Translation failed.");
+                
+                const result = await response.json();
+                const textEs = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (textEs) {
+                    const cleanEs = cleanPunctuationAndSpacing(textEs);
+                    
+                    // Populate Spanish Textareas and Certificate elements
+                    document.getElementById('generatedCommentEs').value = cleanEs;
+                    document.getElementById('rep-comment-print').textContent = cleanEs;
+                    document.getElementById('rep-comment-prev').textContent = cleanEs;
+
+                    updateMetrics(cleanEs, textEn);
+
+                    if (statusIndicator) {
+                        statusIndicator.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> AI Translate Synced!`;
+                        statusIndicator.className = "text-[10px] font-bold text-emerald-400 flex items-center";
+                        setTimeout(() => {
+                            statusIndicator.innerHTML = `<i class="fa-solid fa-circle-check text-slate-500 mr-1"></i> AI Sync Ready`;
+                            statusIndicator.className = "text-[10px] font-bold text-slate-400 flex items-center";
+                        }, 3000);
+                    }
+                    showToast("Bilingual alignment translated!");
+                }
+            } catch (err) {
+                console.error(err);
+                if (statusIndicator) {
+                    statusIndicator.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-400 mr-1"></i> Translation Failed`;
+                    statusIndicator.className = "text-[10px] font-bold text-rose-400 flex items-center";
+                }
+                showToast("Translation sync failed. Verify API Key.");
+            }
+        }
+
+        // Update print layout immediately when Spanish textarea is edited directly
+        function updatePrintFromSpanishTextarea() {
+            const textEs = document.getElementById('generatedCommentEs').value;
+            document.getElementById('rep-comment-print').textContent = textEs;
+            document.getElementById('rep-comment-prev').textContent = textEs;
+            updateMetrics(textEs, document.getElementById('generatedCommentEn').value);
+        }
+
+        // AI Polishing through Gemini Model API
+        async function polishWithAI() {
+            const fullName = document.getElementById('studentName').value.trim();
+            const name = fullName ? fullName.split(' ')[0] : "Emma";
+            const level = document.getElementById('eqnLevel').value;
+            const keyInput = document.getElementById('geminiApiKey').value;
+            
+            const btn = document.getElementById('aiButton');
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Polishing...</span>`;
+
+            const currentEs = document.getElementById('generatedCommentEs').value;
+            const currentEn = document.getElementById('generatedCommentEn').value;
+
+            const systemInstruction = `You are an expert English teacher at an extracurricular academy in Spain. Your task is to rewrite, refine, and polish quarterly/final progress reports for EQN English preparation classes (preparing for Cambridge and Oxford exams).
+            
+            The generated Spanish comment MUST sound extremely natural, formal yet warm and constructive to Spanish parents, matching these reference Golden Examples precisely:
+
+            Golden Reference Examples:
+            1. "Emma es una alumna educada y divertida pero debería intentar participar en las clases de manera más activa. Se despista con facilidad y en ocasiones noto que no está completamente atenta al desarrollo de la clase, lo que podría dificultar su comprensión y aprovechamiento del contenido. No obstante, poco a poco está logrando avances y confío en que, con perseverancia, seguirá mejorando durante el próximo trimestre."
+            2. "Aarón demuestra un alto nivel de capacidad en las clases de inglés. Tiene un vocabulario muy amplio y adquiere nuevos conceptos con facilidad. Creo que podría alcanzar logros aún mayores si se animara a participar de manera más activa en clase y a esforzarse un poco más en las tareas escritas (repasar sus trabajos y esforzarse en mejorar la presentación). Estoy seguro de que, con un pequeño impulso adicional, podrá superar sus propias expectativas y alcanzar resultados aún mejores. No obstante, estoy satisfecho con su rendimiento, y creo que tiene un gran potencial para seguir destacando en el futuro."
+
+            The output MUST be strict JSON formatting containing the keys "es" (natural polished Spanish report) and "en" (natural translation in English). Do not include extra sentences. Consolidate attributes logically into 3-4 cohesive sentences (about 80-120 words total).`;
+
+            const prompt = `Please polish, naturalize, and format the following raw inputs for level ${level} student named ${name}:
+            Raw Spanish Input: ${currentEs}
+            Raw English Input: ${currentEn}
+            
+            Return ONLY a valid JSON object matching this schema:
+            {
+               "es": "Beautifully polished Spanish paragraph for parents...",
+               "en": "Matching English translation..."
+            }`;
+
+            try {
+                const apiKey = keyInput || ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    systemInstruction: {
+                        parts: [{ text: systemInstruction }]
+                    },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                es: { type: "STRING" },
+                                en: { type: "STRING" }
+                            },
+                            required: ["es", "en"]
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("API call failed.");
+                
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    const parsed = JSON.parse(text);
+                    if (parsed.es && parsed.en) {
+                        const cleanEs = cleanPunctuationAndSpacing(parsed.es);
+                        const cleanEn = cleanPunctuationAndSpacing(parsed.en);
+
+                        document.getElementById('generatedCommentEs').value = cleanEs;
+                        document.getElementById('generatedCommentEn').value = cleanEn;
+                        
+                        // Populate Printable fields
+                        document.getElementById('rep-comment-print').textContent = cleanEs;
+                        document.getElementById('rep-comment-prev').textContent = cleanEs;
+
+                        updateMetrics(cleanEs, cleanEn);
+                        showToast("Successfully optimized with Gemini AI!");
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                showToast("Connection failed. Please provide a valid API Key.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        function printReportCard() {
+            try {
+                // Try executing print directly
+                window.print();
+            } catch (err) {
+                console.warn("Direct window.print() blocked or failed. Executing custom window wrapper fallback...", err);
+                
+                // Build absolute print-friendly popup window to escape standard iframe sandboxing issues
+                const printWindow = window.open('', '_blank', 'width=1100,height=800');
+                if (printWindow) {
+                    const printContent = document.querySelector('.printable-card-wrapper').innerHTML;
+                    
+                    // Extract all active styles and Tailwind CDNs to preserve print styling perfectly
+                    const styleElements = Array.from(document.querySelectorAll('style, link[rel="stylesheet"], script[src*="tailwind"]'))
+                        .map(el => el.outerHTML)
+                        .join('\n');
+                    
+                    printWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>EQN Evaluation Report Card - Landscape Print</title>
+                            ${styleElements}
+                            <style>
+                                body {
+                                    background: white !important;
+                                    color: black !important;
+                                    margin: 0;
+                                    padding: 20px;
+                                    -webkit-print-color-adjust: exact;
+                                    print-color-adjust: exact;
+                                }
+                                .printable-card-wrapper {
+                                    display: block !important;
+                                    width: 100%;
+                                    max-width: 297mm;
+                                }
+                                @media print {
+                                    @page {
+                                        size: A4 landscape;
+                                        margin: 0;
+                                    }
+                                    body {
+                                        padding: 10mm;
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="printable-card-wrapper">
+                                ${printContent}
+                            </div>
+                            <script>
+                                // Run the print operation as soon as the logo/styles are fully rendered
+                                window.onload = function() {
+                                    setTimeout(function() {
+                                        window.print();
+                                        window.close();
+                                    }, 600);
+                                };
+                            <\/script>
+                        </body>
+                        </html>
+                    `);
+                    printWindow.document.close();
+                } else {
+                    showToast("Popup blocked! Please allow popups for this site, or try printing directly via Ctrl+P / Cmd+P.");
+                }
+            }
+        }
+
+        function copyToClipboard(lang) {
+            const targetId = lang === 'es' ? 'generatedCommentEs' : 'generatedCommentEn';
+            const btnId = lang === 'es' ? 'btnTextEs' : 'btnTextEn';
+            const originalText = lang === 'es' ? 'Copy Spanish' : 'Copy English';
+
+            const commentText = document.getElementById(targetId).value;
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = commentText;
+            dummy.select();
+            
+            try {
+                const success = document.execCommand('copy');
+                if (success) {
+                    showToast(`Successfully copied ${lang === 'es' ? 'Spanish' : 'English'}!`);
+                    const btn = document.getElementById(btnId);
+                    btn.textContent = "Copied!";
+                    setTimeout(() => { btn.textContent = originalText; }, 2000);
+                } else {
+                    showToast("Error copying text.");
+                }
+            } catch (err) {
+                showToast("Copy error.");
+            }
+            document.body.removeChild(dummy);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('customToast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            toast.classList.remove('opacity-0', 'translate-y-24', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-24', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+
+        function saveCurrentComment() {
+            const fullName = document.getElementById('studentName').value.trim();
+            const teacher = document.getElementById('teacherName').value.trim();
+            const level = document.getElementById('eqnLevel').value;
+            const commentEs = document.getElementById('generatedCommentEs').value;
+            const commentEn = document.getElementById('generatedCommentEn').value;
+
+            if (commentEs.includes("Complete student details") || !commentEs) {
+                showToast("Please generate or write some comments first!");
+                return;
+            }
+
+            savedHistory.push({
+                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                name: fullName ? fullName : "Anonymous Student",
+                teacher: teacher ? teacher : "Not Selected",
+                level: level,
+                commentEs: commentEs,
+                commentEn: commentEn,
+                grades: { ...cardScores }
+            });
+
+            updateHistoryUI();
+            showToast(`Log saved for ${fullName ? fullName : "student"}!`);
+        }
+
+        function updateHistoryUI() {
+            const container = document.getElementById('historyContainer');
+            const batchActions = document.getElementById('batchActions');
+            const logCount = document.getElementById('logCount');
+
+            logCount.textContent = `${savedHistory.length} saved`;
+
+            if (savedHistory.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-4">No comments saved in this session yet.</p>`;
+                batchActions.classList.add('hidden');
+                return;
+            }
+
+            batchActions.classList.remove('hidden');
+
+            container.innerHTML = savedHistory.map((item, index) => `
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 relative hover:border-indigo-300 transition-all text-xs">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="font-bold text-slate-800">${item.name} (${item.level})</span>
+                        <div class="flex items-center space-x-2 text-[10px] text-slate-400">
+                            <span>${item.timestamp}</span>
+                            <button onclick="deleteHistoryItem(${index})" class="text-slate-400 hover:text-red-500 transition-colors" title="Delete">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-[9px] text-indigo-600 mb-1 font-semibold">
+                        Grades: R/W: ${item.grades.reading_writing || '-'}, L/S: ${item.grades.listening_speaking || '-'}, Overall: ${item.grades.overall || '-'}, Effort: ${item.grades.effort_attitude || '-'}
+                    </div>
+                    <p class="text-slate-600 line-clamp-1 italic text-[11px] mb-1">ES: ${item.commentEs}</p>
+                    <p class="text-slate-500 line-clamp-1 italic text-[11px]">EN: ${item.commentEn}</p>
+                    <div class="flex space-x-2 mt-2">
+                        <button onclick="restoreRecord(${index})" class="text-[10px] text-indigo-600 hover:underline">Restore to app</button>
+                        <span class="text-slate-300">|</span>
+                        <button onclick="copySpecific(${index}, 'es')" class="text-[10px] text-slate-600 hover:underline">Copy ES</button>
+                        <button onclick="copySpecific(${index}, 'en')" class="text-[10px] text-slate-600 hover:underline">Copy EN</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Restore a record from log to the active playground
+        function restoreRecord(index) {
+            const record = savedHistory[index];
+            document.getElementById('studentName').value = record.name;
+            document.getElementById('teacherName').value = record.teacher;
+            document.getElementById('eqnLevel').value = record.level;
+            
+            // Set scores
+            if (record.grades.reading_writing) setScore('reading_writing', record.grades.reading_writing);
+            if (record.grades.listening_speaking) setScore('listening_speaking', record.grades.listening_speaking);
+            if (record.grades.overall) setScore('overall', record.grades.overall);
+            if (record.grades.effort_attitude) setScore('effort_attitude', record.grades.effort_attitude);
+
+            evaluateLevelGroupChange();
+            updateLevelSyllabusInfo();
+
+            // Direct assignment to editable values
+            document.getElementById('generatedCommentEs').value = record.commentEs;
+            document.getElementById('generatedCommentEn').value = record.commentEn;
+
+            // Fill visual layouts
+            document.getElementById('rep-comment-print').textContent = record.commentEs;
+            document.getElementById('rep-comment-prev').textContent = record.commentEs;
+
+            updateMetrics(record.commentEs, record.commentEn);
+            syncOfficialFormFields();
+            showToast(`Restored evaluation data for ${record.name}`);
+        }
+
+        function copySpecific(index, lang) {
+            const item = savedHistory[index];
+            const text = lang === 'es' ? item.commentEs : item.commentEn;
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast(`Copied ${lang === 'es' ? 'Spanish' : 'English'}!`);
+        }
+
+        function deleteHistoryItem(index) {
+            savedHistory.splice(index, 1);
+            updateHistoryUI();
+        }
+
+        function clearHistory() {
+            savedHistory = [];
+            updateHistoryUI();
+            showToast("Session log cleared!");
+        }
+
+        function exportToCSV() {
+            if (savedHistory.length === 0) return;
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Student Name,Teacher,Level,Reading Writing Grade,Listening Speaking Grade,Overall Grade,Effort Grade,Spanish Comment,English Comment\n";
+
+            savedHistory.forEach(row => {
+                let escEs = row.commentEs.replace(/"/g, '""');
+                let escEn = row.commentEn.replace(/"/g, '""');
+                csvContent += `"${row.name}","${row.teacher}","${row.level}","${row.grades.reading_writing || ''}","${row.grades.listening_speaking || ''}","${row.grades.overall || ''}","${row.grades.effort_attitude || ''}","${escEs}","${escEn}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `eqn_evaluations_export.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("CSV exported!");
+        }
+    </script>
 </body>
 </html>
